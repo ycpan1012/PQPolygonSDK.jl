@@ -19,15 +19,17 @@ All [Polygon.io](https://polygon.io) application programming interface (API) cal
 
 
 ```julia    
-model(userModelType::Type{PQPolygonSDKUserModel}, options::Dict{String,Any}) -> PQPolygonSDKUserModel
+model(userModelType::Type{PQPolygonSDKUserModel}, 
+    options::Dict{String,Any}) -> PQPolygonSDKUserModel
 ```
     
-
 function where the `options` dictionary holds `email` and `apikey` key value pairs. Once a user model has been created, that model
 is passed into an API endpoint specific `build` method:
 
-    model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel, 
+```julia
+model(apiModelType::Type{T}, userModel::PQPolygonSDKUserModel, 
         options::Dict{String,Any}) -> AbstractPolygonEndpointModel where T<:AbstractPolygonEndpointModel
+```
 
 
 
