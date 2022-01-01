@@ -1,5 +1,5 @@
 ![CI](https://github.com/Paliquant/PQPolygonSDK.jl/workflows/CI/badge.svg)
-![GitHub](https://img.shields.io/github/license/paliquant/PQPolygonSDK.jl)
+![GitHub](https://img.shields.io/github/license/Paliquant/PQPolygonSDK.jl)
 
 ## Introduction
 `PQPolygonSDK.jl` is a software development kit (SDK) for the [Polygon.io](https://polygon.io) financial data warehouse in the [Julia](https://julialang.org) programming language. [Polygon.io](https://polygon.io) is a leading provider of realtime and historical stock, options, forex (FX) data, and digital/crypto currency data feeds.
