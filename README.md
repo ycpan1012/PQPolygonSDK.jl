@@ -17,9 +17,11 @@ To use `PQPolygonSDK.jl` in your projects, issue the command:
 ## Quick Start Guide
 All [Polygon.io](https://polygon.io) application programming interface (API) calls start by creating a `PQPolygonSDKUserModel` using the
 
-    ```julia
-        model(userModelType::Type{PQPolygonSDKUserModel}, options::Dict{String,Any}) -> PQPolygonSDKUserModel
-    ```
+
+```julia    
+model(userModelType::Type{PQPolygonSDKUserModel}, options::Dict{String,Any}) -> PQPolygonSDKUserModel
+```
+    
 
 function where the `options` dictionary holds `email` and `apikey` key value pairs. Once a user model has been created, that model
 is passed into an API endpoint specific `build` method:
