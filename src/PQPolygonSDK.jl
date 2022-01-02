@@ -10,11 +10,17 @@ export api
 
 # types -
 export AbstractPolygonEndpointModel
+export PQPolygonSDKUserModel
+
+# market endpoints -
 export PolygonPreviousCloseEndpointModel
 export PolygonAggregatesEndpointModel
 export PolygonOptionsContractReferenceEndpoint
 export PolygonGroupedDailyEndpointModel
 export PolygonDailyOpenCloseEndpointModel
-export PQPolygonSDKUserModel
+
+# reference endpoints -
+export PolygonTickerNewsEndpointModel
+
 
 end # module
