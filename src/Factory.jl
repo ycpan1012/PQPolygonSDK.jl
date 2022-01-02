@@ -83,6 +83,26 @@ function model(apiModelType::Type{T},
     return model
 end
 
+function url(base::String, model::PolygonPreviousCloseEndpointModel; 
+    apiversion::Int = 2)::String
+
+    # get data from the API call data -
+    adjusted = model.adjusted
+    apikey = model.apikey
+    ticker = model.ticker
+    
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/aggs/ticker/$(ticker)/prev?"
+
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+	options_dictionary["adjusted"] = adjusted
+	options_dictionary["apiKey"] = apikey
+
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
+
 function url(base::String, model::PolygonAggregatesEndpointModel; 
     apiversion::Int = 2)::String
 

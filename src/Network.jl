@@ -8,15 +8,11 @@ function _http_get_call_with_url(url::String)::Some
         end
 
         # ok, so we are going to make a HTTP GET call with the URL that was passed in -
-        response = HTTP.request("GET", url)
+        # we want to handle the errors on our own -
+        response = HTTP.request("GET", url; status_exception = false)
 
-        # ok, so let's check if we are getting a 200 back -
-        if (response.status == 200)
-            return Some(String(response.body))
-        else
-            # create an error, and throw it back to the caller -
-            throw(ErrorException("http status flag $(response.status) was returned from url $(url)"))
-        end
+        # return the body -
+        return Some(String(response.body))
     catch error
 
         # get the original error message -
@@ -36,6 +32,8 @@ function _process_polygon_response(model::Type{T},
         return _process_aggregates_polygon_call_response(response)
     elseif (model == PolygonOptionsContractReferenceEndpoint)
         return _process_options_reference_call_response(response)
+    elseif (model == PolygonPreviousCloseEndpointModel)
+        return _process_previous_close_polygon_call_response(response)
     end
 
     # default -

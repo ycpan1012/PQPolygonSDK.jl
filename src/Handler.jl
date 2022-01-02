@@ -15,6 +15,68 @@ function _polygon_error_handler(request_body_dictionary::Dict{String, Any})::Tup
     return (error_response_dictionary, nothing)
 end
 
+
+
+function _process_previous_close_polygon_call_response(body::String)
+
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+
+    # before we do anything - check: do we have an error?
+    status_flag = request_body_dictionary["status"]
+    if (status_flag == "ERROR")
+        return _polygon_error_handler(request_body_dictionary)
+    end
+
+    # initialize -
+    header_dictionary = Dict{String,Any}()
+    df = DataFrame(
+
+        ticker=String[],
+        volume=Float64[],
+        volume_weighted_average_price=Float64[],
+        open=Float64[],
+        close=Float64[],
+        high=Float64[],
+        low=Float64[],
+        timestamp=Date[],
+        number_of_transactions=Int[]
+    )
+
+    # fill in the header dictionary -
+    header_keys = [
+        "ticker", "queryCount", "adjusted", "status", "request_id", "count"
+    ]
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # populate the results DataFrame -
+    results_array = request_body_dictionary["results"]
+    for result_dictionary ∈ results_array
+        
+        # build a results tuple -
+        result_tuple = (
+
+            ticker = result_dictionary["T"],
+            volume = result_dictionary["v"],
+            volume_weighted_average_price = result_dictionary["vw"],
+            open = result_dictionary["o"],
+            close = result_dictionary["c"],
+            high = result_dictionary["h"],
+            low = result_dictionary["l"],
+            timestamp = unix2datetime(result_dictionary["t"]*(1/1000)),
+            number_of_transactions = result_dictionary["n"]
+        )
+    
+        # push that tuple into the df -
+        push!(df, result_tuple)
+    end
+
+    # return -
+    return (header_dictionary, df)
+end
+
 function _process_aggregates_polygon_call_response(body::String)
 
     # convert to JSON -

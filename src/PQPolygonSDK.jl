@@ -10,6 +10,7 @@ export api
 
 # types -
 export AbstractPolygonEndpointModel
+export PolygonPreviousCloseEndpointModel
 export PolygonAggregatesEndpointModel
 export PolygonOptionsContractReferenceEndpoint
 export PQPolygonSDKUserModel
