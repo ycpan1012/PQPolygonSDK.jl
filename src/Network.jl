@@ -27,12 +27,13 @@ end
 function _process_polygon_response(model::Type{T}, 
     response::String)::Tuple where T<:AbstractPolygonEndpointModel
 
-    # setup type handler map -
+    # setup type handler map -> could we put this in a config file to register new handlers?
     type_handler_dict = Dict{Any,Function}()
     type_handler_dict[PolygonAggregatesEndpointModel] = _process_aggregates_polygon_call_response
     type_handler_dict[PolygonOptionsContractReferenceEndpoint] = _process_options_reference_call_response
     type_handler_dict[PolygonPreviousCloseEndpointModel] = _process_previous_close_polygon_call_response
     type_handler_dict[PolygonGroupedDailyEndpointModel] = _process_aggregates_polygon_call_response
+    type_handler_dict[PolygonDailyOpenCloseEndpointModel] = _process_daily_open_close_call_response
 
     # lookup the type -
     if (haskey(type_handler_dict, model) == true)

@@ -14,6 +14,7 @@ export PolygonPreviousCloseEndpointModel
 export PolygonAggregatesEndpointModel
 export PolygonOptionsContractReferenceEndpoint
 export PolygonGroupedDailyEndpointModel
+export PolygonDailyOpenCloseEndpointModel
 export PQPolygonSDKUserModel
 
 end # module

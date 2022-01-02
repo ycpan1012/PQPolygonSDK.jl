@@ -4,9 +4,7 @@ function _polygon_error_handler(request_body_dictionary::Dict{String, Any})::Tup
     error_response_dictionary = Dict{String,Any}()
     
     # what are my error keys?
-    error_keys = [
-        "status", "error", "request_id"
-    ]
+    error_keys = keys(request_body_dictionary)
     for key ∈ error_keys
         error_response_dictionary[key] = request_body_dictionary[key]
     end
@@ -14,8 +12,6 @@ function _polygon_error_handler(request_body_dictionary::Dict{String, Any})::Tup
     # return -
     return (error_response_dictionary, nothing)
 end
-
-
 
 function _process_previous_close_polygon_call_response(body::String)
 
@@ -157,6 +153,60 @@ function _process_aggregates_polygon_call_response(body::String)
         # push that tuple into the df -
         push!(df, result_tuple)
     end
+
+    # return -
+    return (header_dictionary, df)
+end
+
+function _process_daily_open_close_call_response(body::String)
+
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+
+    # before we do anything - check: do we have an error?
+    status_flag = request_body_dictionary["status"]
+    if (status_flag == "ERROR" || status_flag == "NOT_FOUND")
+        return _polygon_error_handler(request_body_dictionary)
+    end
+
+    # initialize -
+    header_dictionary = Dict{String,Any}()
+    df = DataFrame(
+
+        ticker=String[],
+        volume=Float64[],
+        open=Float64[],
+        close=Float64[],
+        high=Float64[],
+        low=Float64[],
+        from=Date[],
+        afterHours=Float64[],
+        preMarket=Float64[]
+    )
+
+    header_keys = [
+        "status"
+    ]
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # build a results tuple -
+    result_tuple = (
+
+        volume = request_body_dictionary["volume"],
+        open = request_body_dictionary["open"],
+        close = request_body_dictionary["close"],
+        high = request_body_dictionary["high"],
+        low = request_body_dictionary["low"],
+        from = Date(request_body_dictionary["from"]),
+        ticker = request_body_dictionary["symbol"],
+        afterHours = request_body_dictionary["afterHours"],
+        preMarket = request_body_dictionary["preMarket"]
+    )
+
+    # push that tuple into the df -
+    push!(df, result_tuple)
 
     # return -
     return (header_dictionary, df)
