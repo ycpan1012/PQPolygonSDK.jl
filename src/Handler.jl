@@ -298,3 +298,21 @@ function _process_ticker_news_call_response(body::String)
     # return -
     return (header_dictionary, df)
 end
+
+function _process_ticker_details_call_response(body::String)
+
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+
+    # before we do anything - check: do we have an error?
+    status_flag = request_body_dictionary["status"]
+    if (status_flag == "ERROR")
+        return _polygon_error_handler(request_body_dictionary)
+    end
+
+    # initialize -
+    header_dictionary = Dict{String,Any}()
+    df = DataFrame(
+        
+    );
+end

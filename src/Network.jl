@@ -34,6 +34,7 @@ function _process_polygon_response(model::Type{T},
     type_handler_dict[PolygonPreviousCloseEndpointModel] = _process_previous_close_polygon_call_response
     type_handler_dict[PolygonGroupedDailyEndpointModel] = _process_aggregates_polygon_call_response
     type_handler_dict[PolygonDailyOpenCloseEndpointModel] = _process_daily_open_close_call_response
+    type_handler_dict[PolygonTickerNewsEndpointModel] = _process_ticker_news_call_response
 
     # lookup the type -
     if (haskey(type_handler_dict, model) == true)
