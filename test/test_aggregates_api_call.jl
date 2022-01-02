@@ -5,7 +5,7 @@ using DataFrames
 # build a user model -
 options = Dict{String,Any}()
 options["email"] = "jvarner@paliquant.com"
-options["apikey"] = "abcefh1234" # _not_ real API key 
+options["apikey"] = "abc123" # do _not_ check in a real API key 
 
 # build the user model -
 user_model = model(PQPolygonSDKUserModel, options)
@@ -15,7 +15,7 @@ endpoint_options = Dict{String,Any}()
 endpoint_options["adjusted"] = true
 endpoint_options["sortdirection"] = "asc"
 endpoint_options["limit"] = 5000
-endpoint_options["to"] = Date(2021, 12, 29)
+endpoint_options["to"] = Date(2021, 12, 24)
 endpoint_options["from"] = Date(2021, 12, 15)
 endpoint_options["multiplier"] = 1
 endpoint_options["timespan"] = "day"

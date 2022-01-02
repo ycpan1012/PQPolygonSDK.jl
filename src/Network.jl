@@ -8,7 +8,7 @@ function _http_get_call_with_url(url::String)::Some
         end
 
         # ok, so we are going to make a HTTP GET call with the URL that was passed in -
-        # we want to handle the errors on our own -
+        # we want to handle the errors on our own, so do NOT have HTTP.j throw an excpetion -
         response = HTTP.request("GET", url; status_exception = false)
 
         # return the body -

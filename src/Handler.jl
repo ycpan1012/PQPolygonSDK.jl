@@ -47,8 +47,19 @@ function _process_previous_close_polygon_call_response(body::String)
     header_keys = [
         "ticker", "queryCount", "adjusted", "status", "request_id", "count"
     ]
+
+    # check - do we have a count (if not resturn zero)
+    get!(request_body_dictionary, "count", 0)
+
     for key ∈ header_keys
         header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # check - do we have a resultsCount field?
+    results_count = get!(request_body_dictionary, "resultsCount", 0)
+    if (results_count == 0) # we have no results ...
+        # return the header and nothing -
+        return (header_dictionary, nothing)
     end
 
     # populate the results DataFrame -
@@ -106,8 +117,19 @@ function _process_aggregates_polygon_call_response(body::String)
     header_keys = [
         "ticker", "queryCount", "adjusted", "status", "request_id", "count"
     ]
+
+    # check - do we have a count (if not resturn zero)
+    get!(request_body_dictionary, "count", 0)
+
     for key ∈ header_keys
         header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # check - do we have a resultsCount field?
+    results_count = get!(request_body_dictionary, "resultsCount", 0)
+    if (results_count == 0) # we have no results ...
+        # return the header and nothing -
+        return (header_dictionary, nothing)
     end
 
     # populate the results DataFrame -
