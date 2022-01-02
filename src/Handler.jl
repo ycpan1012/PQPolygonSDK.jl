@@ -271,3 +271,30 @@ function _process_options_reference_call_response(body::String)
     # return -
     return (header_dictionary, df)
 end
+
+function _process_ticker_news_call_response(body::String)
+
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+
+    # before we do anything - check: do we have an error?
+    status_flag = request_body_dictionary["status"]
+    if (status_flag == "ERROR")
+        return _polygon_error_handler(request_body_dictionary)
+    end
+
+    # initialize -
+    header_dictionary = Dict{String,Any}()
+    df = DataFrame();
+
+    # fill in the header dictionary -
+    header_keys = [
+        "status", "request_id", "count", "next_url"
+    ]
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # return -
+    return (header_dictionary, df)
+end
