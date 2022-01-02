@@ -13,18 +13,12 @@ user_model = model(PQPolygonSDKUserModel, options)
 # now that we have the user_model, let's build an endpoint model -
 endpoint_options = Dict{String,Any}()
 endpoint_options["adjusted"] = true
-endpoint_options["sortdirection"] = "asc"
-endpoint_options["limit"] = 5000
-endpoint_options["to"] = Date(2021, 12, 24)
-endpoint_options["from"] = Date(2021, 12, 15)
-endpoint_options["multiplier"] = 1
-endpoint_options["timespan"] = "day"
-endpoint_options["ticker"] = "AAPL"
-endpoint_model = model(PolygonAggregatesEndpointModel, user_model, endpoint_options)
+endpoint_options["date"] = Date(2021,12,31)
+endpoint_model = model(PolygonGroupedDailyEndpointModel, user_model, endpoint_options)
 
 # build the url -
 base = "https://api.polygon.io"
 my_url_string = url(base, endpoint_model)
 
 # make the call -
-(header, data) = api(PolygonAggregatesEndpointModel, my_url_string)
+(header, data) = api(PolygonGroupedDailyEndpointModel, my_url_string)

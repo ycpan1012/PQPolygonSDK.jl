@@ -10,6 +10,17 @@ end
 # what is the base type for all endpoint calls?
 abstract type AbstractPolygonEndpointModel end
 
+mutable struct PolygonGroupedDailyEndpointModel <: AbstractPolygonEndpointModel
+
+    # data -
+    date::Date
+    adjusted::Bool
+    apikey::String
+    
+    # constructor -
+    PolygonGroupedDailyEndpointModel() = new()
+end
+
 mutable struct PolygonDailyOpenCloseEndpointModel <: AbstractPolygonEndpointModel
 
     # data -

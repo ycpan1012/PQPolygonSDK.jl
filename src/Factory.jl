@@ -83,6 +83,26 @@ function model(apiModelType::Type{T},
     return model
 end
 
+function url(base::String, model::PolygonGroupedDailyEndpointModel; 
+    apiversion::Int = 2)::String
+
+    # get data from the API call data -
+    adjusted = model.adjusted
+    apikey = model.apikey
+    date = model.date
+
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/aggs/grouped/locale/us/market/stocks/$(date)?"
+
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+	options_dictionary["adjusted"] = adjusted
+	options_dictionary["apiKey"] = apikey
+
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
+
 function url(base::String, model::PolygonPreviousCloseEndpointModel; 
     apiversion::Int = 2)::String
 

@@ -13,6 +13,7 @@ export AbstractPolygonEndpointModel
 export PolygonPreviousCloseEndpointModel
 export PolygonAggregatesEndpointModel
 export PolygonOptionsContractReferenceEndpoint
+export PolygonGroupedDailyEndpointModel
 export PQPolygonSDKUserModel
 
 end # module

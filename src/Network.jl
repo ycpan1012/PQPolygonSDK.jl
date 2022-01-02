@@ -27,13 +27,17 @@ end
 function _process_polygon_response(model::Type{T}, 
     response::String)::Tuple where T<:AbstractPolygonEndpointModel
 
-    # which handler should we call?
-    if (model == PolygonAggregatesEndpointModel)
-        return _process_aggregates_polygon_call_response(response)
-    elseif (model == PolygonOptionsContractReferenceEndpoint)
-        return _process_options_reference_call_response(response)
-    elseif (model == PolygonPreviousCloseEndpointModel)
-        return _process_previous_close_polygon_call_response(response)
+    # setup type handler map -
+    type_handler_dict = Dict{Any,Function}()
+    type_handler_dict[PolygonAggregatesEndpointModel] = _process_aggregates_polygon_call_response
+    type_handler_dict[PolygonOptionsContractReferenceEndpoint] = _process_options_reference_call_response
+    type_handler_dict[PolygonPreviousCloseEndpointModel] = _process_previous_close_polygon_call_response
+    type_handler_dict[PolygonGroupedDailyEndpointModel] = _process_aggregates_polygon_call_response
+
+    # lookup the type -
+    if (haskey(type_handler_dict, model) == true)
+        handler_function = type_handler_dict[model]
+        return handler_function(response);
     end
 
     # default -

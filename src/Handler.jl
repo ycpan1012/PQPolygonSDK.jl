@@ -120,6 +120,7 @@ function _process_aggregates_polygon_call_response(body::String)
 
     # check - do we have a count (if not resturn zero)
     get!(request_body_dictionary, "count", 0)
+    get!(request_body_dictionary, "ticker", "N/A")
 
     for key ∈ header_keys
         header_dictionary[key] = request_body_dictionary[key]
@@ -136,6 +137,10 @@ function _process_aggregates_polygon_call_response(body::String)
     results_array = request_body_dictionary["results"]
     for result_dictionary ∈ results_array
         
+        # set some defaults in case missing fields -
+        get!(result_dictionary, "vw", 0.0)
+        get!(result_dictionary, "n", 0)
+
         # build a results tuple -
         result_tuple = (
 
