@@ -305,14 +305,89 @@ function _process_ticker_details_call_response(body::String)
     request_body_dictionary = JSON.parse(body)
 
     # before we do anything - check: do we have an error?
-    status_flag = request_body_dictionary["status"]
-    if (status_flag == "ERROR")
+    if (haskey(request_body_dictionary,"error") == true)
         return _polygon_error_handler(request_body_dictionary)
     end
 
     # initialize -
     header_dictionary = Dict{String,Any}()
     df = DataFrame(
-        
+
+        logo = String[],
+        listdate = Date[],
+        cik = String[],
+        bloomberg = String[],
+        figi = Union{String,Nothing}[],
+        lei = Union{String,Nothing}[],
+        sic = Int[],
+        country = String[],
+        industry = String[],
+        sector = String[],
+        marketcap = Int[],
+        employees = Int[],
+        phone = String[],
+        ceo = String[],
+        url = String[],
+        description = String[],
+        exchange = String[],
+        name = String[],
+        symbol = String[],
+        exchangeSymbol = String[],
+        hq_address = String[],
+        hq_state = String[],
+        hq_country = String[],
+        type = String[],
+        updated = Date[],
+        tags = Array{Array{String,1},1}(),
+        similar = Array{Array{String,1},1}()
     );
+
+    # fill in the header dictionary -
+    header_keys = [
+        "active"
+    ];
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # updated comes back in "non-standard" mm/dd/yyyy date format -
+    date_components = split(request_body_dictionary["updated"],"/")
+
+    # build a results tuple -
+    result_tuple = (
+
+        logo = request_body_dictionary["logo"],
+        listdate = Date(request_body_dictionary["listdate"]),
+        figi = request_body_dictionary["figi"],
+        cik = request_body_dictionary["cik"],
+        bloomberg = request_body_dictionary["bloomberg"],
+        lei = request_body_dictionary["lei"],
+        sic = request_body_dictionary["sic"],
+        country = request_body_dictionary["country"],
+        industry = request_body_dictionary["industry"],
+        sector = request_body_dictionary["sector"],
+        marketcap = request_body_dictionary["marketcap"],
+        employees = request_body_dictionary["employees"],
+        phone = request_body_dictionary["phone"],
+        ceo = request_body_dictionary["ceo"],
+        url = request_body_dictionary["url"],
+        description = request_body_dictionary["description"],
+        exchange = request_body_dictionary["exchange"],
+        name = request_body_dictionary["name"],
+        symbol = request_body_dictionary["symbol"],
+        exchangeSymbol = request_body_dictionary["exchangeSymbol"],
+        hq_address = request_body_dictionary["hq_address"],
+        hq_state = request_body_dictionary["hq_state"],
+        hq_country = request_body_dictionary["hq_country"],
+        type = request_body_dictionary["type"],
+        updated = Date("$(date_components[3])-$(date_components[1])-$(date_components[2])"),
+        tags = request_body_dictionary["tags"],
+        similar = request_body_dictionary["similar"]
+    )
+
+    # push that tuple into the df -
+    push!(df, result_tuple)
+
+    # return -
+    return (header_dictionary, df)
 end

@@ -76,6 +76,16 @@ mutable struct PolygonTickerNewsEndpointModel <: AbstractPolygonEndpointModel
     PolygonTickerNewsEndpointModel() = new()
 end
 
+mutable struct PolygonTickerDetailsEndpointModel <: AbstractPolygonEndpointModel
+
+    # data -
+    apikey::String
+    ticker::String
+
+    # constructor -
+    PolygonTickerDetailsEndpointModel() = new()
+end
+
 mutable struct PolygonOptionsContractReferenceEndpoint <: AbstractPolygonEndpointModel
 
     # data -

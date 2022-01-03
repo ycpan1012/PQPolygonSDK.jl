@@ -21,6 +21,7 @@ export PolygonDailyOpenCloseEndpointModel
 
 # reference endpoints -
 export PolygonTickerNewsEndpointModel
+export PolygonTickerDetailsEndpointModel
 
 
 end # module

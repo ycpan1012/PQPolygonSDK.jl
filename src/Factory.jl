@@ -83,6 +83,7 @@ function model(apiModelType::Type{T},
     return model
 end
 
+# -- URL FACTORY METHODS BELOW HERE --------------------------------------------------- #
 function url(base::String, model::PolygonTickerNewsEndpointModel; 
     apiversion::Int = 2)::String
 
@@ -216,3 +217,22 @@ function url(base::String, model::PolygonAggregatesEndpointModel;
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
+
+function url(base::String, model::PolygonTickerDetailsEndpointModel; 
+    apiversion::Int = 1)::String
+
+    # get data from the API call data -
+    apikey = model.apikey
+    ticker = model.ticker
+    
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/meta/symbols/$(ticker)/company?"
+
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+    options_dictionary["apiKey"] = apikey
+
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
+# -- URL FACTORY METHODS ABOVE HERE --------------------------------------------------- #
