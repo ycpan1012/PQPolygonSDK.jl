@@ -2,10 +2,11 @@
 _PATH_TO_SRC = dirname(pathof(@__MODULE__))
 
 # load external packages that we depend upon -
-using DataFrames
+using Reexport
+@reexport using DataFrames
+@reexport using CSV
 using HTTP
 using TOML
-using CSV
 using Dates
 using JSON
 
