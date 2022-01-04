@@ -83,6 +83,52 @@ function model(apiModelType::Type{T},
     return model
 end
 
+# -- URL FACTORY METHODS BELOW HERE --------------------------------------------------- #
+function url(base::String, model::PolygonTickerNewsEndpointModel; 
+    apiversion::Int = 2)::String
+
+    # get data from the API call data -
+    apikey = model.apikey
+    ticker = model.ticker
+    limit = model.limit
+    order = model.order
+
+    # check: do we have a published_utc parameter?
+    published_utc = nothing
+    if (isnothing(model.published_utc) == false)
+        published_utc = model.published_utc
+    end
+
+    # check: do we have a sort parameter?
+    sort = nothing
+    if (isnothing(model.sort) == false)
+        sort = model.sort
+    end
+
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/reference/news?"
+
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+	options_dictionary["apiKey"] = apikey
+    options_dictionary["limit"] = limit
+    options_dictionary["order"] = order
+    options_dictionary["ticker"] = ticker
+
+    # do we have sort data?
+    if (isnothing(sort) == false)
+        options_dictionary["order"] = sort
+    end
+
+    # do we have published_utc data?
+    if (isnothing(published_utc) == false)
+        options_dictionary["published_utc"] = published_utc
+    end
+
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
+
 function url(base::String, model::PolygonDailyOpenCloseEndpointModel; 
     apiversion::Int = 1)::String
 
@@ -171,3 +217,22 @@ function url(base::String, model::PolygonAggregatesEndpointModel;
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
+
+function url(base::String, model::PolygonTickerDetailsEndpointModel; 
+    apiversion::Int = 1)::String
+
+    # get data from the API call data -
+    apikey = model.apikey
+    ticker = model.ticker
+    
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/meta/symbols/$(ticker)/company?"
+
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+    options_dictionary["apiKey"] = apikey
+
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
+# -- URL FACTORY METHODS ABOVE HERE --------------------------------------------------- #

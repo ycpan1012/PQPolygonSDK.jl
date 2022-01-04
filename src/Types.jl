@@ -61,6 +61,31 @@ mutable struct PolygonAggregatesEndpointModel <: AbstractPolygonEndpointModel
     PolygonAggregatesEndpointModel() = new()
 end
 
+
+mutable struct PolygonTickerNewsEndpointModel <: AbstractPolygonEndpointModel
+
+    # data -
+    ticker::String
+    published_utc::Union{Date, Nothing}
+    order::String
+    limit::Int64
+    sort::Union{String, Nothing}
+    apikey::String
+
+    # constructor -
+    PolygonTickerNewsEndpointModel() = new()
+end
+
+mutable struct PolygonTickerDetailsEndpointModel <: AbstractPolygonEndpointModel
+
+    # data -
+    apikey::String
+    ticker::String
+
+    # constructor -
+    PolygonTickerDetailsEndpointModel() = new()
+end
+
 mutable struct PolygonOptionsContractReferenceEndpoint <: AbstractPolygonEndpointModel
 
     # data -
@@ -76,4 +101,3 @@ mutable struct PolygonOptionsContractReferenceEndpoint <: AbstractPolygonEndpoin
     # constructor -
     PolygonOptionsContractReferenceEndpoint() = new()
 end
-
