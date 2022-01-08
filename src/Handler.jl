@@ -35,7 +35,7 @@ function _process_previous_close_polygon_call_response(body::String)
         close=Float64[],
         high=Float64[],
         low=Float64[],
-        timestamp=Date[],
+        timestamp=DateTime[],
         number_of_transactions=Int[]
     )
 
@@ -105,7 +105,7 @@ function _process_aggregates_polygon_call_response(body::String)
         close=Float64[],
         high=Float64[],
         low=Float64[],
-        timestamp=Date[],
+        timestamp=DateTime[],
         number_of_transactions=Int[]
     )
 
