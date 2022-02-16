@@ -1,4 +1,4 @@
-module PQPolygonSDK
+module testPQPolygonSDK
 
 # include -
 include("Include.jl")
