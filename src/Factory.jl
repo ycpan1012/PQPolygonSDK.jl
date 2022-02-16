@@ -219,7 +219,7 @@ function url(base::String, model::PolygonAggregatesEndpointModel;
 end
 
 function url(base::String, model::PolygonTickerDetailsEndpointModel; 
-    apiversion::Int = 1)::String
+    apiversion::Int = 3)::String #ycpan
 
     # get data from the API call data -
     apikey = model.apikey
