@@ -1,6 +1,6 @@
 name = "testPQPolygonSDK"
-uuid = "a9381516-e38f-4c81-935c-32707fb4df4c"
-authors = ["Varnerlab <jvarner@pooksoft.com>"]
+uuid = "8ef4823e-8ee4-11ec-b909-0242ac120002"
+authors = ["test <test12345123@gmail.com>"]
 version = "0.1.4"
 
 [deps]
