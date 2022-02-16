@@ -224,11 +224,12 @@ function url(base::String, model::PolygonTickerDetailsEndpointModel;
     # get data from the API call data -
     apikey = model.apikey
     ticker = model.ticker
+    date   = model.date #ycpan
     
     # build up the base string -
-    base_url = "$(base)/v$(apiversion)/meta/symbols/$(ticker)/company?"
+    base_url = "$(base)/v$(apiversion)/reference/tickers/$(ticker)?"
 
-    # what keys are passed as parameters?
+	# what keys are passed as parameters?
     options_dictionary = Dict{String,Any}()
     options_dictionary["apiKey"] = apikey
 
