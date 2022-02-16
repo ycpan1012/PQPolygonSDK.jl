@@ -81,7 +81,7 @@ mutable struct PolygonTickerDetailsEndpointModel <: AbstractPolygonEndpointModel
     # data -
     apikey::String
     ticker::String
-    date::String
+    date::Date
     # constructor -
     PolygonTickerDetailsEndpointModel() = new()
 end
