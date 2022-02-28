@@ -379,6 +379,7 @@ function _process_ticker_details_call_response(body::String)
             #branding = result_dictionary["branding"],
             #share_class_shares_outstanding = result_dictionary["share_class_shares_outstanding"],
             #weighted_shares_outstanding = result_dictionary["weighted_shares_outstanding"]
+            testtt = result_dictionary["brandin"] 
         )
 
     # push that tuple into the df -
