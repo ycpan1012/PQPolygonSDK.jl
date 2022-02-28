@@ -386,3 +386,48 @@ function _process_ticker_details_call_response(body::String)
     # return -
     return (header_dictionary, df)
 end
+
+function _process_market_holidays_call_response(body::String)
+
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+
+    
+# initialize -
+    #header_dictionary = Dict{String,Any}()
+    df = DataFrame(
+
+        exchange = String[],
+        name = String[],
+        date = Date[],
+        status = String[]
+    );
+    
+#     # fill in the header dictionary -
+#     header_keys = [
+#             "status", "request_id"
+#     ];
+#     for key ∈ header_keys
+#         header_dictionary[key] = request_body_dictionary[key]
+#     end
+
+    # populate the results DataFrame -
+    results_array = request_body_dictionary
+    for result_dictionary ∈ results_array
+
+        # build a results tuple -
+        result_tuple = (
+
+            exchange = result_dictionary["exchange"],
+            name = result_dictionary["name"],
+            date = Date(result_dictionary["date"]),
+            status = result_dictionary["status"]
+        )
+    
+        # push that tuple into the df -
+        push!(df, result_tuple)
+    end
+    
+    # return -
+    return (df)  #remove "header_dictionary"
+end
