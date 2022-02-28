@@ -423,3 +423,85 @@ function _process_market_holidays_call_response(body::String) #ycpan
     # return -
     return (header_dictionary, df)
 end
+
+function _process_exchanges_call_response(body::String) #ycpan
+
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+
+    # before we do anything - check: do we have an error?
+    status_flag = request_body_dictionary["status"]
+    if (status_flag == "ERROR")
+        return _polygon_error_handler(request_body_dictionary)
+    end
+    
+    # initialize -
+    header_dictionary = Dict{String,Any}()
+    df = DataFrame(
+
+        id = Int[],
+        type = String[],
+        asset_class = String[],
+        locale = String[],
+        name = String[],
+        acronym = String[],
+        mic = String[],
+        operating_mic = String[],
+        participant_id = String[],
+        url = String[]
+
+    );
+    
+    # fill in the header dictionary -
+    header_keys = [
+            "status", "request_id", "count"
+    ];
+    
+    # check - do we have a count (if not resturn zero)
+    results_count = get!(request_body_dictionary, "count", 0)
+    
+    # if no result we return nothing
+    if (results_count == 0) # we have no results ...
+        # return the header and nothing -
+        return (header_dictionary, nothing)
+    end
+    
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # populate the results DataFrame -
+    results_array = request_body_dictionary["results"]
+    for result_dictionary ∈ results_array
+        # set some defaults in case missing fields -
+        get!(result_dictionary, "id", 0)
+        get!(result_dictionary, "type", "N/A")
+        get!(result_dictionary, "asset_class", "N/A")
+        get!(result_dictionary, "locale", "N/A")
+        get!(result_dictionary, "name", "N/A")
+        get!(result_dictionary, "acronym", "N/A")
+        get!(result_dictionary, "mic", "N/A")
+        get!(result_dictionary, "operating_mic", "N/A")
+        get!(result_dictionary, "participant_id", "N/A")
+        get!(result_dictionary, "url", "N/A")
+
+        result_tuple = (
+
+                    id = result_dictionary["id"],
+                    type = result_dictionary["type"],
+                    asset_class = result_dictionary["asset_class"],
+                    locale = result_dictionary["locale"],
+                    name = result_dictionary["name"],
+                    acronym = result_dictionary["acronym"],
+                    mic = result_dictionary["mic"],
+                    operating_mic = result_dictionary["operating_mic"],
+                    participant_id = result_dictionary["participant_id"],
+                    url = result_dictionary["url"]
+                )
+
+        push!(df, result_tuple)
+    end
+    
+    # return -
+    return (header_dictionary, df)
+end
