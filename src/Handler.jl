@@ -299,94 +299,91 @@ function _process_ticker_news_call_response(body::String)
     return (header_dictionary, df)
 end
 
-function _process_ticker_details_call_response(body::String)
+function _process_ticker_details_call_response(body::String) #ycp
 
     # convert to JSON -
     request_body_dictionary = JSON.parse(body)
 
     # before we do anything - check: do we have an error?
-    if (haskey(request_body_dictionary,"error") == true)
+    status_flag = request_body_dictionary["status"]
+    if (status_flag == "NOT_FOUND")
         return _polygon_error_handler(request_body_dictionary)
     end
-
+    
     # initialize -
     header_dictionary = Dict{String,Any}()
     df = DataFrame(
 
-        logo = String[],
-        listdate = Date[],
-        cik = String[],
-        bloomberg = String[],
-        figi = Union{String,Nothing}[],
-        lei = Union{String,Nothing}[],
-        sic = Int[],
-        country = String[],
-        industry = String[],
-        sector = String[],
-        marketcap = Int[],
-        employees = Int[],
-        phone = String[],
-        ceo = String[],
-        url = String[],
-        description = String[],
-        exchange = String[],
+        ticker = String[],
         name = String[],
-        symbol = String[],
-        exchangeSymbol = String[],
-        hq_address = String[],
-        hq_state = String[],
-        hq_country = String[],
+        market = String[],
+        locale = String[],
+        primary_exchange = String[],
         type = String[],
-        updated = Date[],
-        tags = Array{Array{String,1},1}(),
-        similar = Array{Array{String,1},1}()
+        active = Bool[], #watch out whether it works
+        currency_name = String[],
+        cik = String[],
+        composite_figi = String[],
+        share_class_figi = String[],
+        market_cap = Int[],
+        phone_number = String[],
+        address = Array{Array{String,1},1}(), #not sure curly bracket's type
+        description = String[],
+        sic_code = String[],
+        sic_description = String[],
+        ticker_root = String[],
+        homepage_url = String[],
+        total_employees = Int[],
+        list_date = Date[],
+        branding = Array{Array{String,1},1}(), #not sure curly bracket's type
+        share_class_shares_outstanding = Int[],
+        weighted_shares_outstanding = Int[]
     );
-
+    
     # fill in the header dictionary -
     header_keys = [
-        "active"
+            "status", "request_id"
     ];
     for key ∈ header_keys
         header_dictionary[key] = request_body_dictionary[key]
     end
 
-    # updated comes back in "non-standard" mm/dd/yyyy date format -
-    date_components = split(request_body_dictionary["updated"],"/")
+    # populate the results DataFrame -
+    results_array = request_body_dictionary["results"]
+    for result_dictionary ∈ results_array
 
-    # build a results tuple -
-    result_tuple = (
+        # build a results tuple -
+        result_tuple = (
 
-        logo = request_body_dictionary["logo"],
-        listdate = Date(request_body_dictionary["listdate"]),
-        figi = request_body_dictionary["figi"],
-        cik = request_body_dictionary["cik"],
-        bloomberg = request_body_dictionary["bloomberg"],
-        lei = request_body_dictionary["lei"],
-        sic = request_body_dictionary["sic"],
-        country = request_body_dictionary["country"],
-        industry = request_body_dictionary["industry"],
-        sector = request_body_dictionary["sector"],
-        marketcap = request_body_dictionary["marketcap"],
-        employees = request_body_dictionary["employees"],
-        phone = request_body_dictionary["phone"],
-        ceo = request_body_dictionary["ceo"],
-        url = request_body_dictionary["url"],
-        description = request_body_dictionary["description"],
-        exchange = request_body_dictionary["exchange"],
-        name = request_body_dictionary["name"],
-        symbol = request_body_dictionary["symbol"],
-        exchangeSymbol = request_body_dictionary["exchangeSymbol"],
-        hq_address = request_body_dictionary["hq_address"],
-        hq_state = request_body_dictionary["hq_state"],
-        hq_country = request_body_dictionary["hq_country"],
-        type = request_body_dictionary["type"],
-        updated = Date("$(date_components[3])-$(date_components[1])-$(date_components[2])"),
-        tags = request_body_dictionary["tags"],
-        similar = request_body_dictionary["similar"]
-    )
+            ticker = result_dictionary["ticker"],
+            name = result_dictionary["name"],
+            market = result_dictionary["market"],
+            locale = result_dictionary["locale"],
+            primary_exchange = result_dictionary["primary_exchange"],
+            type = result_dictionary["type"],
+            active = result_dictionary["active"],
+            currency_name = result_dictionary["currency_name"],
+            cik = result_dictionary["cik"],
+            composite_figi = result_dictionary["composite_figi"],
+            share_class_figi = result_dictionary["share_class_figi"],
+            market_cap = result_dictionary["market_cap"],
+            phone_number = result_dictionary["phone_number"],
+            address = result_dictionary["address"],
+            description = result_dictionary["description"],
+            sic_code = result_dictionary["sic_code"],
+            sic_description = result_dictionary["sic_description"],
+            ticker_root = result_dictionary["ticker_root"],
+            homepage_url = result_dictionary["homepage_url"],
+            total_employees = result_dictionary["total_employees"],
+            list_date = Date(result_dictionary["list_date"]),
+            branding = result_dictionary["branding"],
+            share_class_shares_outstanding = result_dictionary["share_class_shares_outstanding"],
+            weighted_shares_outstanding = result_dictionary["weighted_shares_outstanding"]
+        )
 
     # push that tuple into the df -
     push!(df, result_tuple)
+    end
 
     # return -
     return (header_dictionary, df)
