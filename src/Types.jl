@@ -102,7 +102,7 @@ mutable struct PolygonOptionsContractReferenceEndpoint <: AbstractPolygonEndpoin
     PolygonOptionsContractReferenceEndpoint() = new()
 end
 
-mutable struct PolygonMarketHolidaysEndpointModel <: AbstractPolygonEndpointModel
+mutable struct PolygonMarketHolidaysEndpointModel <: AbstractPolygonEndpointModel #ycpan
 
     # data -
     apikey::String    
