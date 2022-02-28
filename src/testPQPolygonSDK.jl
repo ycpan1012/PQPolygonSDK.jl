@@ -18,6 +18,7 @@ export PolygonAggregatesEndpointModel
 export PolygonOptionsContractReferenceEndpoint
 export PolygonGroupedDailyEndpointModel
 export PolygonDailyOpenCloseEndpointModel
+export PolygonMarketHolidaysEndpointModel #ycpan
 
 # reference endpoints -
 export PolygonTickerNewsEndpointModel
