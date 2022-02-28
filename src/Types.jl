@@ -101,3 +101,12 @@ mutable struct PolygonOptionsContractReferenceEndpoint <: AbstractPolygonEndpoin
     # constructor -
     PolygonOptionsContractReferenceEndpoint() = new()
 end
+
+mutable struct PolygonMarketHolidaysEndpointModel <: AbstractPolygonEndpointModel
+
+    # data -
+    apikey::String    
+
+    # constructor -
+    PolygonMarketHolidaysEndpointModel() = new()
+end
