@@ -237,4 +237,21 @@ function url(base::String, model::PolygonTickerDetailsEndpointModel;
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
+
+function url(base::String, model::PolygonMarketHolidaysEndpointModel; #ycpan
+    apiversion::Int = 1)::String
+
+    # get data from the API call data - no data
+    apikey = model.apikey    
+
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/marketstatus/upcoming?"
+
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+    options_dictionary["apiKey"] = apikey
+
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
 # -- URL FACTORY METHODS ABOVE HERE --------------------------------------------------- #
