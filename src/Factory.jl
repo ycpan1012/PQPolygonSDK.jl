@@ -255,17 +255,21 @@ function url(base::String, model::PolygonMarketHolidaysEndpointModel; #ycpan
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
 
-function url(base::String, model::PolygonMarketHolidaysEndpointModel; #ycpan
-    apiversion::Int = 1)::String
+function url(base::String, model::PolygonExchangesEndpointModel; #ycpan
+    apiversion::Int = 3)::String #ycpan
 
-    # get data from the API call data - no data
-    apikey = model.apikey    
-
+    # get data from the API call data -
+    apikey = model.apikey
+    asset_class = model.asset_class
+    locale   = model.locale #ycpan
+    
     # build up the base string -
-    base_url = "$(base)/v$(apiversion)/marketstatus/upcoming?"
-
+    base_url = "$(base)/v$(apiversion)/reference/exchanges?"
+    
     # what keys are passed as parameters?
     options_dictionary = Dict{String,Any}()
+    options_dictionary["asset_class"] = asset_class
+    options_dictionary["locale"] = locale
     options_dictionary["apiKey"] = apikey
 
     # return -
