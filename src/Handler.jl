@@ -387,7 +387,7 @@ function _process_ticker_details_call_response(body::String)
     return (header_dictionary, df)
 end
 
-function _process_market_holidays_call_response(body::String)
+function _process_market_holidays_call_response(body::String) #ycpan
 
     # convert to JSON -
     request_body_dictionary = JSON.parse(body)
@@ -429,5 +429,5 @@ function _process_market_holidays_call_response(body::String)
     end
     
     # return -
-    return (header_dictionary, df)  #remove "header_dictionary"
+    return (header_dictionary, df)
 end
