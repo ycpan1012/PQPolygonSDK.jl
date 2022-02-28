@@ -306,7 +306,7 @@ function _process_ticker_details_call_response(body::String)
 
     # before we do anything - check: do we have an error? can be due to stick or date
     status_flag = request_body_dictionary["status"]
-    if (status_flag == "NOT_FOUND") || (status_flag == "ERROR")
+    if (status_flag == "ERROR" || status_flag == "NOT_FOUND")
         return _polygon_error_handler(request_body_dictionary)
     end
     
@@ -315,11 +315,11 @@ function _process_ticker_details_call_response(body::String)
     df = DataFrame(
 
         ticker = String[],
-        #name = String[],
-        #market = String[],
-        #locale = String[],
-        #primary_exchange = String[],
-        #type = String[],
+        name = String[],
+        market = String[],
+        locale = String[],
+        primary_exchange = String[],
+        type = String[],
         #active = Bool[], #watch out whether it works
         #currency_name = String[],
         #cik = String[],
@@ -356,11 +356,11 @@ function _process_ticker_details_call_response(body::String)
         result_tuple = (
 
             ticker = result_dictionary["ticker"],
-            #name = result_dictionary["name"],
-            #market = result_dictionary["market"],
-            #locale = result_dictionary["locale"],
-            #primary_exchange = result_dictionary["primary_exchange"],
-            #type = result_dictionary["type"],
+            name = result_dictionary["name"],
+            market = result_dictionary["market"],
+            locale = result_dictionary["locale"],
+            primary_exchange = result_dictionary["primary_exchange"],
+            type = result_dictionary["type"],
             #active = result_dictionary["active"],
             #currency_name = result_dictionary["currency_name"],
             #cik = result_dictionary["cik"],
@@ -379,11 +379,10 @@ function _process_ticker_details_call_response(body::String)
             #branding = result_dictionary["branding"],
             #share_class_shares_outstanding = result_dictionary["share_class_shares_outstanding"],
             #weighted_shares_outstanding = result_dictionary["weighted_shares_outstanding"]
-            testtt = result_dictionary["brandin"] 
         )
 
     # push that tuple into the df -
-    push!(df, result_tuple)
+        push!(df, result_tuple)
     end
 
     # return -
