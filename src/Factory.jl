@@ -229,9 +229,10 @@ function url(base::String, model::PolygonTickerDetailsEndpointModel;
     # build up the base string -
     base_url = "$(base)/v$(apiversion)/reference/tickers/$(ticker)?"
 
-	# what keys are passed as parameters?
+    # what keys are passed as parameters?
     options_dictionary = Dict{String,Any}()
-    options_dictionary["apiKey"] = apikey
+    options_dictionary["date"] = date
+    options_dictionary["apiKey"] = apikey #ycpan
 
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
