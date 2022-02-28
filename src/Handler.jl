@@ -402,14 +402,6 @@ function _process_market_holidays_call_response(body::String) #ycpan
         date = Date[],
         status = String[]
     );
-    
-#     # fill in the header dictionary -
-#     header_keys = [
-#             "status", "request_id"
-#     ];
-#     for key ∈ header_keys
-#         header_dictionary[key] = request_body_dictionary[key]
-#     end
 
     # populate the results DataFrame -
     results_array = request_body_dictionary
