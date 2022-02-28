@@ -332,10 +332,10 @@ function _process_ticker_details_call_response(body::String)
         sic_code = String[],
         sic_description = String[],
         ticker_root = String[],
-        homepage_url = String[],
-        total_employees = Int[],
+        #homepage_url = String[],
+        #total_employees = Int[],
         list_date = Date[],
-        branding = Dict{String, Any}(),
+        #branding = Dict{String, Any}(),
         share_class_shares_outstanding = Int[],
         weighted_shares_outstanding = Int[]
     );
@@ -372,10 +372,10 @@ function _process_ticker_details_call_response(body::String)
                 sic_code = results_array["sic_code"],
                 sic_description = results_array["sic_description"],
                 ticker_root = results_array["ticker_root"],
-                homepage_url = results_array["homepage_url"],
-                total_employees = results_array["total_employees"],
+                #homepage_url = results_array["homepage_url"],
+                #total_employees = results_array["total_employees"],
                 list_date = Date(results_array["list_date"]),
-                branding = results_array["branding"],
+                #branding = results_array["branding"],
                 share_class_shares_outstanding = results_array["share_class_shares_outstanding"],
                 weighted_shares_outstanding = results_array["weighted_shares_outstanding"]
             )
