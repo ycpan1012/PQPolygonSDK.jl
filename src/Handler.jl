@@ -394,7 +394,7 @@ function _process_market_holidays_call_response(body::String)
 
     
 # initialize -
-    #header_dictionary = Dict{String,Any}()
+    header_dictionary = Dict{String,Any}()
     df = DataFrame(
 
         exchange = String[],
@@ -429,5 +429,5 @@ function _process_market_holidays_call_response(body::String)
     end
     
     # return -
-    return (df)  #remove "header_dictionary"
+    return (header_dictionary, df)  #remove "header_dictionary"
 end
