@@ -320,14 +320,14 @@ function _process_ticker_details_call_response(body::String)
         locale = String[],
         primary_exchange = String[],
         type = String[],
-        active = Bool[], #watch out whether it works
+        #active = Bool[], #watch out whether it works
         currency_name = String[],
         cik = String[],
         composite_figi = String[],
         share_class_figi = String[],
         market_cap = Int[],
         phone_number = String[],
-        address = Array{Array{String,1},1}(), #not sure curly bracket's type
+        #address = Array{Array{String,1},1}(), #not sure curly bracket's type
         description = String[],
         sic_code = String[],
         sic_description = String[],
@@ -335,7 +335,7 @@ function _process_ticker_details_call_response(body::String)
         homepage_url = String[],
         total_employees = Int[],
         list_date = Date[],
-        branding = Array{Array{String,1},1}(), #not sure curly bracket's type
+        #branding = Array{Array{String,1},1}(), #not sure curly bracket's type
         share_class_shares_outstanding = Int[],
         weighted_shares_outstanding = Int[]
     );
@@ -361,14 +361,14 @@ function _process_ticker_details_call_response(body::String)
             locale = result_dictionary["locale"],
             primary_exchange = result_dictionary["primary_exchange"],
             type = result_dictionary["type"],
-            active = result_dictionary["active"],
+            #active = result_dictionary["active"],
             currency_name = result_dictionary["currency_name"],
             cik = result_dictionary["cik"],
             composite_figi = result_dictionary["composite_figi"],
             share_class_figi = result_dictionary["share_class_figi"],
             market_cap = result_dictionary["market_cap"],
             phone_number = result_dictionary["phone_number"],
-            address = result_dictionary["address"],
+            #address = result_dictionary["address"],
             description = result_dictionary["description"],
             sic_code = result_dictionary["sic_code"],
             sic_description = result_dictionary["sic_description"],
@@ -376,7 +376,7 @@ function _process_ticker_details_call_response(body::String)
             homepage_url = result_dictionary["homepage_url"],
             total_employees = result_dictionary["total_employees"],
             list_date = Date(result_dictionary["list_date"]),
-            branding = result_dictionary["branding"],
+            #branding = result_dictionary["branding"],
             share_class_shares_outstanding = result_dictionary["share_class_shares_outstanding"],
             weighted_shares_outstanding = result_dictionary["weighted_shares_outstanding"]
         )
