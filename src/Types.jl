@@ -110,3 +110,14 @@ mutable struct PolygonMarketHolidaysEndpointModel <: AbstractPolygonEndpointMode
     # constructor -
     PolygonMarketHolidaysEndpointModel() = new()
 end
+
+mutable struct PolygonExchangesEndpointModel <: AbstractPolygonEndpointModel #ycpan
+
+    # data -
+    apikey::String
+    asset_class::String
+    locale::String
+    
+    # constructor -
+    PolygonExchangesEndpointModel() = new()
+end
