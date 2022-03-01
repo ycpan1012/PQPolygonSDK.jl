@@ -25,6 +25,7 @@ export PolygonTickerNewsEndpointModel
 export PolygonTickerDetailsEndpointModel
 export PolygonMarketHolidaysEndpointModel #ycpan
 export PolygonExchangesEndpointModel #ycpan
-export PolygonStockSplitsEndpointModel #ycpan
+export PolygonStockSplitsEndpointModel  #ycpan
+export PolygonMarketStatusEndpointModel #ycpan
 
 end # module
