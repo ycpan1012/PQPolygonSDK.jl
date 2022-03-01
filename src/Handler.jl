@@ -505,3 +505,54 @@ function _process_exchanges_call_response(body::String) #ycpan
     # return -
     return (header_dictionary, df)
 end
+
+function _process_stock_splits_call_response(body::String) #ycpan
+
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+
+    
+    # initialize -
+    header_dictionary = Dict{String,Any}()
+    df = DataFrame(
+
+        execution_date = Date[],
+        split_from = Int[],
+        split_to = Int[],
+        ticker = String[]
+
+    );
+    
+    # fill in the header dictionary -
+    header_keys = [
+            "status", "request_id"
+    ];
+    
+    # if no result we return nothing
+    if (request_body_dictionary["results"] == Any[]) # we have no results ...
+        # return the header and nothing -
+        return (header_dictionary, nothing)
+    end
+    
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # populate the results DataFrame -
+    results_array = request_body_dictionary["results"]
+    for result_dictionary ∈ results_array
+
+        result_tuple = (
+
+                    execution_date = Date(result_dictionary["execution_date"]),
+                    split_from = result_dictionary["split_from"],
+                    split_to = result_dictionary["split_to"],
+                    ticker = result_dictionary["ticker"] 
+                )
+
+        push!(df, result_tuple)
+    end
+    
+    # return -
+    return (header_dictionary, df)
+end
