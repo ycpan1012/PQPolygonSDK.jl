@@ -611,11 +611,6 @@ function _process_dividends_call_response(body::String) #ycpan
         return _polygon_error_handler(request_body_dictionary)
     end
     
-    # if no results we return nothing
-    if (request_body_dictionary["results"] == Any[]) # we have no results ...
-        # return the header and nothing -
-        return (header_dictionary, nothing)
-    end
     
     #initialize -
     header_dictionary = Dict{String,Any}()
@@ -638,6 +633,12 @@ function _process_dividends_call_response(body::String) #ycpan
 
     for key ∈ header_keys
         header_dictionary[key] = request_body_dictionary[key]
+    end
+    
+    # if no results we return nothing
+    if (request_body_dictionary["results"] == Any[]) # we have no results ...
+        # return the header and nothing -
+        return (header_dictionary, nothing)
     end
 
     results_array = request_body_dictionary["results"]
