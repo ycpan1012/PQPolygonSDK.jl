@@ -328,4 +328,49 @@ function url(base::String, model::PolygonMarketStatusEndpointModel; #ycpan
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
+
+function url(base::String, model::PolygonDividendsEndpointModel; #ycpan
+    apiversion::Int = 3)::String
+
+    # get data from the API call data -    
+    apikey = model.apikey
+    ticker = model.ticker
+    ex_dividend_date = model.ex_dividend_date
+    record_date = model.record_date
+    declaration_date = model.declaration_date
+    pay_date = model.pay_date
+    frequency = model.frequency
+    cash_amount = model.cash_amount
+    dividend_type = model.dividend_type
+    order = model.order
+    limit = model.limit
+    sort = model.sort
+    
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/reference/dividends?"
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+    options_dictionary["ticker"] = ticker
+    options_dictionary["ex_dividend_date"] = ex_dividend_date
+    options_dictionary["record_date"] = record_date
+    options_dictionary["declaration_date"] = declaration_date
+    options_dictionary["pay_date"] = pay_date
+    options_dictionary["frequency"] = frequency
+    options_dictionary["cash_amount"] = cash_amount
+    options_dictionary["dividend_type"] = dividend_type
+    options_dictionary["order"] = order
+    options_dictionary["limit"] = limit 
+    options_dictionary["sort"] = sort    
+    options_dictionary["apiKey"] = apikey
+    
+    #not all parameters are required, if we have N/A input, we remove it"
+    for options ∈ keys(options_dictionary)
+        if options_dictionary[options] == "N/A"
+            pop!(options_dictionary, options)
+        end
+    end
+            
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
 # -- URL FACTORY METHODS ABOVE HERE --------------------------------------------------- #
