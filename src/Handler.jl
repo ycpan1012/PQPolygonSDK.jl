@@ -631,6 +631,9 @@ function _process_dividends_call_response(body::String) #ycpan
                 "status", "request_id","next_url"
         ];
 
+    # check - do we have a next_url (if not resturn N/A)
+    get!(request_body_dictionary, "next_url", "N/A)
+    
     for key ∈ header_keys
         header_dictionary[key] = request_body_dictionary[key]
     end
