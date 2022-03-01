@@ -528,14 +528,14 @@ function _process_stock_splits_call_response(body::String) #ycpan
             "status", "request_id"
     ];
     
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
     # if no result we return nothing
     if (request_body_dictionary["results"] == Any[]) # we have no results ...
         # return the header and nothing -
         return (header_dictionary, nothing)
-    end
-    
-    for key ∈ header_keys
-        header_dictionary[key] = request_body_dictionary[key]
     end
 
     # populate the results DataFrame -
