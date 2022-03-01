@@ -18,12 +18,12 @@ export PolygonAggregatesEndpointModel
 export PolygonOptionsContractReferenceEndpoint
 export PolygonGroupedDailyEndpointModel
 export PolygonDailyOpenCloseEndpointModel
-export PolygonMarketHolidaysEndpointModel #ycpan
-export PolygonExchangesEndpointModel #ycpan
+
 
 # reference endpoints -
 export PolygonTickerNewsEndpointModel
 export PolygonTickerDetailsEndpointModel
-
+export PolygonMarketHolidaysEndpointModel #ycpan
+export PolygonExchangesEndpointModel #ycpan
 
 end # module
