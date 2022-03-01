@@ -275,4 +275,40 @@ function url(base::String, model::PolygonExchangesEndpointModel; #ycpan
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
+
+function url(base::String, model::PolygonStockSplitsEndpointModel; #ycpan
+    apiversion::Int = 3)::String
+
+    # get data from the API call data -
+    apikey = model.apikey
+    ticker = model.ticker
+    execution_date = model.execution_date
+    reverse_split = model.reverse_split
+    order = model.order
+    limit = model.limit
+    sort = model.sort
+    
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/reference/splits?"
+    
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+    options_dictionary["ticker"] = ticker
+    options_dictionary["execution_date"] = execution_date
+    options_dictionary["reverse_split"] = reverse_split
+    options_dictionary["order"] = order
+    options_dictionary["limit"] = limit
+    options_dictionary["sort"] = sort
+    options_dictionary["apiKey"] = apikey
+    
+    #not all parameters are required, if we have N/A input, we remove it"
+    for options ∈ keys(options_dictionary)
+        if options_dictionary[options] == "N/A"
+            pop!(options_dictionary, options)
+        end
+    end
+            
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
 # -- URL FACTORY METHODS ABOVE HERE --------------------------------------------------- #
