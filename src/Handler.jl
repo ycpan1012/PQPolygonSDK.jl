@@ -556,3 +556,45 @@ function _process_stock_splits_call_response(body::String) #ycpan
     # return -
     return (header_dictionary, df)
 end
+
+function _process_market_status_call_response(body::String) #ycpan
+
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+    
+    #initialize -
+    header_dictionary = Dict{String,Any}()
+    df = DataFrame(
+
+    market = String[],
+    earlyHours = Bool[],
+    afterHours = Bool[],
+    serverTime = String[],
+    nyse  = String[],
+    nasdaq  = String[],
+    fx  = String[],
+    crypto  = String[]
+    );
+
+    # populate the results DataFrame -
+    results_array = request_body_dictionary
+    
+    # build a results tuple -
+    result_tuple = (
+    
+        market = results_array["market"],
+        earlyHours = results_array["earlyHours"],
+        afterHours = results_array["afterHours"],
+        serverTime = results_array["serverTime"],
+        nyse = results_array["exchanges"]["nyse"],
+        nasdaq = results_array["exchanges"]["nasdaq"],
+        fx = results_array["currencies"]["fx"],
+        crypto = results_array["currencies"]["crypto"]
+        )
+    
+    # push that tuple into the df -
+    push!(df, result_tuple)
+    
+    # return -
+    return (header_dictionary, df)
+end
