@@ -137,7 +137,7 @@ mutable struct PolygonStockSplitsEndpointModel <: AbstractPolygonEndpointModel #
     PolygonStockSplitsEndpointModel() = new()
 end
 
-mutable struct PolygonMarketStatusEndpointModel <: AbstractPolygonEndpointModel #ycpan
+mutable struct PolygonMarketStatusEndpointModel <: AbstractPolygonEndpointModel #yc
 
     # data - 
     apikey::String    
