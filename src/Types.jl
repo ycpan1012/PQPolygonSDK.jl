@@ -33,20 +33,6 @@ mutable struct PolygonDailyOpenCloseEndpointModel <: AbstractPolygonEndpointMode
     PolygonDailyOpenCloseEndpointModel() = new()
 end
 
-mutable struct PolygonStockSplitsEndpointModel <: AbstractPolygonEndpointModel
-
-    # data -
-    apikey::String
-    ticker::String
-    execution_date::String
-    reverse_split::String
-    order::String
-    limit::String
-    sort::String
-    
-    # constructor -
-    PolygonStockSplitsEndpointModel() = new()
-end
 mutable struct PolygonPreviousCloseEndpointModel <: AbstractPolygonEndpointModel
 
     # data -
@@ -134,4 +120,19 @@ mutable struct PolygonExchangesEndpointModel <: AbstractPolygonEndpointModel #yc
     
     # constructor -
     PolygonExchangesEndpointModel() = new()
+end
+
+mutable struct PolygonStockSplitsEndpointModel <: AbstractPolygonEndpointModel #ycpan
+
+    # data -
+    apikey::String
+    ticker::String
+    execution_date::String
+    reverse_split::String
+    order::String
+    limit::String
+    sort::String
+    
+    # constructor -
+    PolygonStockSplitsEndpointModel() = new()
 end
