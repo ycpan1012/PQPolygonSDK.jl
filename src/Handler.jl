@@ -599,11 +599,10 @@ function _process_market_status_call_response(body::String) #ycpan
     return (header_dictionary, df)
 end
 
-function _process_dividends_call_response(body::String) #ycpan
+function _process_dividends_call_response(body::String)
 
     # convert to JSON -
     request_body_dictionary = JSON.parse(body)
-
     
     # before we do anything - check: do we have an error? can be due to stick or date
     status_flag = request_body_dictionary["status"]
@@ -633,15 +632,16 @@ function _process_dividends_call_response(body::String) #ycpan
     #fill in next_url if no value
     get!(request_body_dictionary,"next_url","N/A")
 
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+    
     # if no results we return nothing
     if (request_body_dictionary["results"] == Any[]) # we have no results ...
         # return the header and nothing -
         return (header_dictionary, nothing)
     end
 
-    for key ∈ header_keys
-        header_dictionary[key] = request_body_dictionary[key]
-    end
 
     results_array = request_body_dictionary["results"]
     for result_dictionary ∈ results_array
@@ -661,7 +661,4 @@ function _process_dividends_call_response(body::String) #ycpan
 
         push!(df, result_tuple)
     end
-
-    # return -
-    return (header_dictionary, df)
 end
