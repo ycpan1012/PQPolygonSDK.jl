@@ -218,22 +218,29 @@ function url(base::String, model::PolygonAggregatesEndpointModel;
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
 
-function url(base::String, model::PolygonTickerDetailsEndpointModel; 
-    apiversion::Int = 3)::String #ycpan
+function url(base::String, model::PolygonTickerDetailsEndpointModel; #ycpan
+    apiversion::Int = 3)::String
 
     # get data from the API call data -
     apikey = model.apikey
     ticker = model.ticker
-    date   = model.date #ycpan
+    date   = model.date
     
     # build up the base string -
-    base_url = "$(base)/v$(apiversion)/reference/tickers/$(ticker)?" #ycpan
+    base_url = "$(base)/v$(apiversion)/reference/tickers/$(ticker)?"
 
     # what keys are passed as parameters?
     options_dictionary = Dict{String,Any}()
-    options_dictionary["date"] = date #ycpan
+    options_dictionary["date"] = date
     options_dictionary["apiKey"] = apikey
-
+    
+    #not all parameters are required, if we have N/A input, we remove it"
+    for options ∈ keys(options_dictionary)
+        if options_dictionary[options] == "N/A"
+            pop!(options_dictionary, options)
+        end
+    end
+    
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
