@@ -380,4 +380,51 @@ function url(base::String, model::PolygonDividendsEndpointModel; #ycpan
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
+
+function url(base::String, model::PolygonTickersEndpointModel; #ycpan
+    apiversion::Int = 3)::String #ycpan
+
+            
+    # get data from the API call data -
+    apikey   = model.apikey
+    ticker   = model.ticker
+    market   = model.market
+    exchange = model.exchange
+    cusip    = model.cusip
+    cik      = model.cik
+    date     = model.date
+    search   = model.search
+    active   = model.active
+    sort     = model.sort
+    order    = model.order
+    limit    = model.limit
+    
+    
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/reference/tickers?"
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+    options_dictionary["ticker"] = ticker
+    options_dictionary["market"] = market
+    options_dictionary["exchange"] = exchange
+    options_dictionary["cusip"] = cusip
+    options_dictionary["cik"] = cik
+    options_dictionary["date"] = date
+    options_dictionary["search"] = search
+    options_dictionary["active"] = active
+    options_dictionary["sort"] = sort
+    options_dictionary["order"] = order
+    options_dictionary["limit"] = limit    
+    options_dictionary["apiKey"] = apikey
+    
+    #not all parameters are required, if we have N/A input, we remove it"
+    for options ∈ keys(options_dictionary)
+        if options_dictionary[options] == "N/A"
+            pop!(options_dictionary, options)
+        end
+    end
+            
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
 # -- URL FACTORY METHODS ABOVE HERE --------------------------------------------------- #
