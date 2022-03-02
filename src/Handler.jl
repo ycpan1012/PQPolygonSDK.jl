@@ -755,7 +755,7 @@ function _process_tickers_call_response(body::String) #ycpan
 
         result_tuple = (
 
-                    ticker = result_dictionary["ticker"],
+                    ticker = result_dictionary["ticker"]
                     #name = result_dictionary["name"],
                     #market = result_dictionary["market"],
                     #locale = result_dictionary["locale"],
