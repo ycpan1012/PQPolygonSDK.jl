@@ -427,4 +427,40 @@ function url(base::String, model::PolygonTickersEndpointModel;
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
+
+function url(base::String, model::PolygonConditionsEndpointModel; #ycpan
+    apiversion::Int = 3)::String #ycpan
+    
+    # get data from the API call data -
+    apikey      = model.apikey
+    asset_class = model.asset_class
+    data_type   = model.data_type
+    id          = model.id
+    order       = model.order
+    limit       = model.limit
+    sort        = model.sort
+
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/reference/conditions?"
+    
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+    options_dictionary["apiKey"] = apikey
+    options_dictionary["asset_class"] = asset_class
+    options_dictionary["data_type"] = data_type
+    options_dictionary["id"] = id
+    options_dictionary["order"] = order
+    options_dictionary["limit"] = limit
+    options_dictionary["sort"] = sort 
+    
+    #not all parameters are required, if we have N/A input, we remove it"
+    for options ∈ keys(options_dictionary)
+        if options_dictionary[options] == "N/A"
+            pop!(options_dictionary, options)
+        end
+    end
+            
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
 # -- URL FACTORY METHODS ABOVE HERE --------------------------------------------------- #
