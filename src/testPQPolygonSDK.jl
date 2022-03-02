@@ -28,5 +28,6 @@ export PolygonExchangesEndpointModel #ycpan
 export PolygonStockSplitsEndpointModel  #ycpan
 export PolygonMarketStatusEndpointModel #ycpan
 export PolygonDividendsEndpointModel #ycpan
+export PolygonTickersEndpointModel #ycpan
 
 end # module
