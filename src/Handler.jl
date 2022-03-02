@@ -689,6 +689,9 @@ function _process_dividends_call_response(body::String)
 
         push!(df, result_tuple)
     end
+    
+    # return -
+    return (header_dictionary, df)
 end
 
 function _process_tickers_call_response(body::String) #ycpan
