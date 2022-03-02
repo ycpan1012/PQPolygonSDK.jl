@@ -41,6 +41,7 @@ function _process_polygon_response(model::Type{T},
     type_handler_dict[PolygonStockSplitsEndpointModel] = _process_stock_splits_call_response #ycpan
     type_handler_dict[PolygonMarketStatusEndpointModel] = _process_market_status_call_response #ycpan
     type_handler_dict[PolygonDividendsEndpointModel] = _process_dividends_call_response #ycpan
+    type_handler_dict[PolygonTickersEndpointModel] = _process_tickers_call_response #ycpan
         
     # lookup the type -
     if (haskey(type_handler_dict, model) == true)
