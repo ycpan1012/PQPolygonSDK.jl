@@ -727,8 +727,8 @@ function _process_tickers_call_response(body::String) #ycpan
         ];
 
     #fill in next_url if no value
-    #get!(request_body_dictionary,"next_url","N/A")
-    #get!(request_body_dictionary,"count",0)
+    get!(request_body_dictionary,"next_url","N/A")
+    get!(request_body_dictionary,"count",0)
 
     for key ∈ header_keys
         header_dictionary[key] = request_body_dictionary[key]
