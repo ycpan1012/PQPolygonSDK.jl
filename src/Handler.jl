@@ -314,52 +314,39 @@ function _process_ticker_details_call_response(body::String) #ycpan
     header_dictionary = Dict{String,Any}()
     df = DataFrame(
 
-        ticker = String[],
-        name = String[],
-        market = String[],
-        locale = String[],
-        primary_exchange = String[],
-        type = String[],
-        active = Bool[],
-        currency_name = String[],
-        cik = String[],
-        composite_figi = String[],
-        share_class_figi = String[],
-        market_cap = Float64[],
-        phone_number = String[],
-        
-        address1 = String[],
-        city = String[],
-        state = String[],
-        postal_code = String[],
-        
-        description = String[],
-        sic_code = String[],
-        sic_description = String[],
-        ticker_root = String[],
-        homepage_url = String[],
-        total_employees = Float64[],
-        list_date = String[],
-        
-        logo_url = String[],
-        icon_url = String[],
-        
-        share_class_shares_outstanding = Float64[],
-        weighted_shares_outstanding = Float64[]
-    );
-    
-    # fill in the header dictionary -
-    header_keys = [
-            "status", "request_id"
-    ];
-    for key ∈ header_keys
-        header_dictionary[key] = request_body_dictionary[key]
-    end
+            ticker = String[],
+            name = String[],
+            market = String[],
+            locale = String[],
+            primary_exchange = String[],
+            type = String[],
+            active = Bool[],
+            currency_name = String[],
+            cik = String[],
+            composite_figi = String[],
+            share_class_figi = String[],
+            market_cap = Float64[],
+            phone_number = String[],
+            address1 = String[],
+            city = String[],
+            state = String[],
+            postal_code = String[],
+            description = String[],
+            sic_code = String[],
+            sic_description = String[],
+            ticker_root = String[],
+            homepage_url = String[],
+            total_employees = Int[],
+            list_date = String[],
+            logo_url = String[],
+            icon_url = String[],
+            share_class_shares_outstanding = Float64[],
+            weighted_shares_outstanding = Float64[]
+        )
 
-    # populate the results DataFrame -
     results_array = request_body_dictionary["results"]
-    
-    #get if no value
+
+    #get if no values
     get!(results_array, "primary_exchange", "N/A")
     get!(results_array, "type", "N/A")
     get!(results_array, "cik", "N/A")
@@ -367,10 +354,14 @@ function _process_ticker_details_call_response(body::String) #ycpan
     get!(results_array, "share_class_figi", "N/A")
     get!(results_array, "market_cap", NaN)
     get!(results_array, "phone_number", "N/A")
-    get!(results_array, "address1", "N/A")
-    get!(results_array, "city", "N/A")
-    get!(results_array, "state", "N/A")
-    get!(results_array, "postal_code", "N/A")
+
+    #get if no values - address dictionary
+    get!(results_array, "address", Dict("address1" => "N/A", "city" => "N/A", "state" => "N/A", "postal_code" => "N/A"))    
+    get!(results_array["address"], "address1", "N/A")
+    get!(results_array["address"], "city", "N/A")
+    get!(results_array["address"], "state", "N/A")
+    get!(results_array["address"], "postal_code", "N/A")
+
     get!(results_array, "description", "N/A")
     get!(results_array, "sic_code", "N/A")
     get!(results_array, "sic_description", "N/A")
@@ -378,12 +369,15 @@ function _process_ticker_details_call_response(body::String) #ycpan
     get!(results_array, "homepage_url", "N/A")
     get!(results_array, "total_employees", "N/A")
     get!(results_array, "list_date", "N/A")
-    get!(results_array, "logo_url", "N/A")
-    get!(results_array, "icon_url", "N/A")
+
+    #get if no values - branding dictionary
+    get!(results_array, "branding", Dict("logo_url" => "N/A",  "icon_url" => "N/A"))
+    get!(results_array["branding"], "logo_url", "N/A")
+    get!(results_array["branding"], "icon_url", "N/A")
+
     get!(results_array, "share_class_shares_outstanding", NaN)
     get!(results_array, "share_class_shares_outstanding", NaN)
 
-    # build a results tuple -
     result_tuple = (
 
                 ticker = results_array["ticker"],
@@ -415,10 +409,7 @@ function _process_ticker_details_call_response(body::String) #ycpan
                 share_class_shares_outstanding = results_array["share_class_shares_outstanding"],
                 weighted_shares_outstanding = results_array["weighted_shares_outstanding"]
             )
-    
-    # push that tuple into the df -
     push!(df, result_tuple)
-    
 
     # return -
     return (header_dictionary, df)
