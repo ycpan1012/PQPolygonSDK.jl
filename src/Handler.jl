@@ -735,7 +735,7 @@ function _process_tickers_call_response(body::String) #ycpan
     end
 
     # if no results we return nothing
-    if (header_dictionary["count"] == 0) # we have no results ...
+    if (request_body_dictionary["results"] == Any[]) # we have no results ...
         # return the header and nothing -
         return (header_dictionary, nothing)
     end
