@@ -706,17 +706,17 @@ function _process_tickers_call_response(body::String) #ycpan
     df = DataFrame(
 
         ticker = String[],
-        name = String[],
-        market = String[],
-        locale = String[],
-        active = Bool[],
-        primary_exchange = String[],
-        type = String[],
-        currency_name = String[],
-        cik = String[],
-        composite_figi = String[],
-        share_class_figi = String[],
-        last_updated_utc = String[] #,
+        #name = String[],
+        #market = String[],
+        #locale = String[],
+        #active = Bool[],
+        #primary_exchange = String[],
+        #type = String[],
+        #currency_name = String[],
+        #cik = String[],
+        #composite_figi = String[],
+        #share_class_figi = String[],
+        #last_updated_utc = String[] #,
         #delisted_utc = String[]
 
         )
@@ -756,17 +756,17 @@ function _process_tickers_call_response(body::String) #ycpan
         result_tuple = (
 
                     ticker = result_dictionary["ticker"],
-                    name = result_dictionary["name"],
-                    market = result_dictionary["market"],
-                    locale = result_dictionary["locale"],
-                    active = result_dictionary["active"],
-                    primary_exchange = result_dictionary["primary_exchange"],
-                    type = result_dictionary["type"],
-                    currency_name = result_dictionary["currency_name"],
-                    cik = result_dictionary["cik"],
-                    composite_figi = result_dictionary["composite_figi"],
-                    share_class_figi = result_dictionary["share_class_figi"],
-                    last_updated_utc = result_dictionary["last_updated_utc"] #,
+                    #name = result_dictionary["name"],
+                    #market = result_dictionary["market"],
+                    #locale = result_dictionary["locale"],
+                    #active = result_dictionary["active"],
+                    #primary_exchange = result_dictionary["primary_exchange"],
+                    #type = result_dictionary["type"],
+                    #currency_name = result_dictionary["currency_name"],
+                    #cik = result_dictionary["cik"],
+                    #composite_figi = result_dictionary["composite_figi"],
+                    #share_class_figi = result_dictionary["share_class_figi"],
+                    #last_updated_utc = result_dictionary["last_updated_utc"] #,
                     #delisted_utc = result_dictionary["delisted_utc"],
                 )
 
