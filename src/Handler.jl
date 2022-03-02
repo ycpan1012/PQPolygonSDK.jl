@@ -706,7 +706,7 @@ function _process_tickers_call_response(body::String) #ycpan
     df = DataFrame(
 
         ticker = String[],
-        #name = String[],
+        name = String[],
         #market = String[],
         #locale = String[],
         #active = Bool[],
@@ -755,8 +755,8 @@ function _process_tickers_call_response(body::String) #ycpan
 
         result_tuple = (
 
-                    ticker = result_dictionary["ticker"]
-                    #name = result_dictionary["name"],
+                    ticker = result_dictionary["ticker"],
+                    name = result_dictionary["name"]
                     #market = result_dictionary["market"],
                     #locale = result_dictionary["locale"],
                     #active = result_dictionary["active"],
