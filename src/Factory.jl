@@ -381,7 +381,7 @@ function url(base::String, model::PolygonDividendsEndpointModel; #ycpan
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
 
-function url(base::String, model::PolygonTickersEndpointModel; #ycpan
+function url(base::String, model::PolygonTickersEndpointModel; 
     apiversion::Int = 3)::String #ycpan
 
             
