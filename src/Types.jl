@@ -166,3 +166,25 @@ mutable struct PolygonDividendsEndpointModel <: AbstractPolygonEndpointModel #yc
     # constructor -
     PolygonDividendsEndpointModel() = new()
 end
+
+mutable struct PolygonTickersEndpointModel <: AbstractPolygonEndpointModel #ycpan
+
+    # data -
+    apikey::String
+    ticker::String
+    type::String
+    market::String
+    exchange::String
+    cusip::String
+    cik::String
+    date::String
+    search::String
+    active::Bool
+    sort::String
+    order::String
+    limit::String
+        
+    
+    # constructor -
+    PolygonTickersEndpointModel() = new()
+end
