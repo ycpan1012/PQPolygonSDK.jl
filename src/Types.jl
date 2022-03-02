@@ -76,12 +76,13 @@ mutable struct PolygonTickerNewsEndpointModel <: AbstractPolygonEndpointModel
     PolygonTickerNewsEndpointModel() = new()
 end
 
-mutable struct PolygonTickerDetailsEndpointModel <: AbstractPolygonEndpointModel
+mutable struct PolygonTickerDetailsEndpointModel <: AbstractPolygonEndpointModel #ycpan
 
     # data -
     apikey::String
     ticker::String
-    date::Date #ycpan
+    date::String
+    
     # constructor -
     PolygonTickerDetailsEndpointModel() = new()
 end
