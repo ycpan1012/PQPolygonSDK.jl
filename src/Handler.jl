@@ -336,7 +336,7 @@ function _process_ticker_details_call_response(body::String) #ycpan
             sic_description = String[],
             ticker_root = String[],
             homepage_url = String[],
-            total_employees = Int[],
+            total_employees = Float64[],
             list_date = String[],
             logo_url = String[],
             icon_url = String[],
@@ -367,7 +367,7 @@ function _process_ticker_details_call_response(body::String) #ycpan
     get!(results_array, "sic_description", "N/A")
     get!(results_array, "ticker_root", "N/A")
     get!(results_array, "homepage_url", "N/A")
-    get!(results_array, "total_employees", "N/A")
+    get!(results_array, "total_employees", NaN)
     get!(results_array, "list_date", "N/A")
 
     #get if no values - branding dictionary
