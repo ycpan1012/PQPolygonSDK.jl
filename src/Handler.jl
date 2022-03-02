@@ -723,22 +723,22 @@ function _process_tickers_call_response(body::String) #ycpan
 
     # fill in the header dictionary -
     header_keys = [
-                "status", "request_id", "count", "next_url"
+                "status", "request_id", "count" #, "next_url"
         ];
 
     #fill in next_url if no value
-    get!(request_body_dictionary,"next_url","N/A")
-    get!(request_body_dictionary,"count",0)
+    #get!(request_body_dictionary,"next_url","N/A")
+    #get!(request_body_dictionary,"count",0)
 
     for key ∈ header_keys
         header_dictionary[key] = request_body_dictionary[key]
     end
 
     # if no results we return nothing
-    if (request_body_dictionary["results"] == Any[]) # we have no results ...
+    #if (request_body_dictionary["results"] == Any[]) # we have no results ...
         # return the header and nothing -
-        return (header_dictionary, nothing)
-    end
+        #return (header_dictionary, nothing)
+    #end
 
     results_array = request_body_dictionary["results"]
     for result_dictionary ∈ results_array
