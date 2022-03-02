@@ -706,7 +706,7 @@ function _process_tickers_call_response(body::String) #ycpan
     df = DataFrame(
 
         ticker = String[],
-        name = String[],
+        name = String[]
         #market = String[],
         #locale = String[],
         #active = Bool[],
