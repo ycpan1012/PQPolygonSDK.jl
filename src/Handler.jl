@@ -709,7 +709,7 @@ function _process_tickers_call_response(body::String) #ycpan
     df = DataFrame(
 
         ticker = String[],
-        name = String[]
+        name = String[],
         market = String[],
         locale = String[],
         active = Bool[],
@@ -759,7 +759,7 @@ function _process_tickers_call_response(body::String) #ycpan
         result_tuple = (
 
                     ticker = result_dictionary["ticker"],
-                    name = result_dictionary["name"]
+                    name = result_dictionary["name"],
                     market = result_dictionary["market"],
                     locale = result_dictionary["locale"],
                     active = result_dictionary["active"],
@@ -770,7 +770,7 @@ function _process_tickers_call_response(body::String) #ycpan
                     composite_figi = result_dictionary["composite_figi"],
                     share_class_figi = result_dictionary["share_class_figi"],
                     last_updated_utc = result_dictionary["last_updated_utc"],
-                    delisted_utc = result_dictionary["delisted_utc"],
+                    delisted_utc = result_dictionary["delisted_utc"]
                 )
 
         push!(df, result_tuple)
