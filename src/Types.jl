@@ -188,3 +188,20 @@ mutable struct PolygonTickersEndpointModel <: AbstractPolygonEndpointModel #ycpa
     # constructor -
     PolygonTickersEndpointModel() = new()
 end
+
+mutable struct PolygonConditionsEndpointModel <: AbstractPolygonEndpointModel #ycpan
+
+    # data -
+    apikey::String
+    asset_class::String
+    data_type::String
+    id::String
+    sip::String
+    order::String
+    limit::String
+    sort::String
+        
+    
+    # constructor -
+    PolygonConditionsEndpointModel() = new()
+end
