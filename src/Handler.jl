@@ -716,14 +716,14 @@ function _process_tickers_call_response(body::String) #ycpan
         cik = String[],
         composite_figi = String[],
         share_class_figi = String[],
-        last_updated_utc = String[],
-        delisted_utc = String[]
+        last_updated_utc = String[] #,
+        #delisted_utc = String[]
 
         )
 
     # fill in the header dictionary -
     header_keys = [
-                "status", "request_id", "count" #, "next_url"
+                "status", "request_id", "count", "next_url"
         ];
 
     #fill in next_url if no value
@@ -735,23 +735,23 @@ function _process_tickers_call_response(body::String) #ycpan
     end
 
     # if no results we return nothing
-    #if (request_body_dictionary["results"] == Any[]) # we have no results ...
+    if (request_body_dictionary["results"] == Any[]) # we have no results ...
         # return the header and nothing -
-        #return (header_dictionary, nothing)
-    #end
+        return (header_dictionary, nothing)
+    end
 
     results_array = request_body_dictionary["results"]
     for result_dictionary ∈ results_array
 
         #get if no values
-        get!(result_dictionary, "primary_exchange", "N/A")
-        get!(result_dictionary, "type", "N/A")
-        get!(result_dictionary, "currency_name", "N/A")
-        get!(result_dictionary, "cik", "N/A")
-        get!(result_dictionary, "composite_figi", "N/A")
-        get!(result_dictionary, "share_class_figi", "N/A")
-        get!(result_dictionary, "last_updated_utc", "N/A")
-        get!(result_dictionary, "delisted_utc", "N/A")
+        #get!(result_dictionary, "primary_exchange", "N/A")
+        #get!(result_dictionary, "type", "N/A")
+        #get!(result_dictionary, "currency_name", "N/A")
+        #get!(result_dictionary, "cik", "N/A")
+        #get!(result_dictionary, "composite_figi", "N/A")
+        #get!(result_dictionary, "share_class_figi", "N/A")
+        #get!(result_dictionary, "last_updated_utc", "N/A")
+        #get!(result_dictionary, "delisted_utc", "N/A")
 
         result_tuple = (
 
@@ -766,8 +766,8 @@ function _process_tickers_call_response(body::String) #ycpan
                     cik = result_dictionary["cik"],
                     composite_figi = result_dictionary["composite_figi"],
                     share_class_figi = result_dictionary["share_class_figi"],
-                    last_updated_utc = result_dictionary["last_updated_utc"],
-                    delisted_utc = result_dictionary["delisted_utc"],
+                    last_updated_utc = result_dictionary["last_updated_utc"] #,
+                    #delisted_utc = result_dictionary["delisted_utc"],
                 )
 
         push!(df, result_tuple)
