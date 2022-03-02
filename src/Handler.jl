@@ -779,3 +779,102 @@ function _process_tickers_call_response(body::String) #ycpan
     # return -
     return (header_dictionary, df)
 end
+
+function _process_conditions_call_response(body::String) #ycpan
+    
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+    # before we do anything - check: do we have an error? can be due to stick or date
+    status_flag = request_body_dictionary["status"]
+    if (status_flag == "ERROR")
+        return _polygon_error_handler(request_body_dictionary)
+    end
+
+    # initialize -
+    header_dictionary = Dict{String,Any}()
+    df = DataFrame(
+    
+        name = String[],#
+        asset_class = String[],#
+        data_types =  Array{Array{String,1},1}(),#
+        id = Int[],#
+        abbreviation = String[],
+        description = String[],
+        exchange = String[],
+        legacy = String[],
+        sip_mapping_CTA = String[],
+        sip_mapping_OPRA = String[],
+        sip_mapping_UTP = String[],
+        type = String[],#
+        consolidated_updates_high_low = String[],
+        consolidated_updates_open_close = String[],
+        consolidated_updates_volume = String[],
+        market_center_updates_high_low = String[],
+        market_center_updates_open_close = String[],
+        market_center_updates_volume = String[]
+
+        )
+
+    # fill in the header dictionary -
+    header_keys = [
+                "status", "request_id", "count", "next_url"
+        ];
+
+    #fill in next_url if no value
+    get!(request_body_dictionary,"next_url","N/A")
+    get!(request_body_dictionary,"count",0)
+
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # if no results we return nothing
+    if (request_body_dictionary["results"] == Any[]) # we have no results ...
+        # return the header and nothing -
+        return (header_dictionary, nothing)
+    end
+
+    results_array = request_body_dictionary["results"]
+    for result_dictionary ∈ results_array
+
+        #get if no values
+        get!(result_dictionary, "abbreviation", "N/A")
+        get!(result_dictionary, "description", "N/A")
+        get!(result_dictionary, "exchange", "N/A")
+        get!(result_dictionary, "legacy", "N/A")
+        get!(result_dictionary["sip_mapping"], "CTA", "N/A")
+        get!(result_dictionary["sip_mapping"], "OPRA", "N/A")
+        get!(result_dictionary["sip_mapping"], "UTP", "N/A")
+        get!(result_dictionary, "update_rules", Dict("consolidated"  => Dict("updates_high_low"   => "N/A",
+                                                                             "updates_open_close" => "N/A", 
+                                                                             "updates_volume"     => "N/A"), 
+                                                     "market_center" => Dict("updates_high_low"   => "N/A",
+                                                                             "updates_open_close" => "N/A",
+                                                                             "updates_volume"     => "N/A")))
+        result_tuple = (
+        
+                    name = result_dictionary["name"],
+                    asset_class = result_dictionary["asset_class"],
+                    data_types = result_dictionary["data_types"],
+                    id = result_dictionary["id"],
+                    abbreviation = result_dictionary["abbreviation"],
+                    description = result_dictionary["description"],
+                    exchange = string(result_dictionary["exchange"]),
+                    legacy = string(result_dictionary["legacy"]),                    
+                    sip_mapping_CTA = result_dictionary["sip_mapping"]["CTA"],
+                    sip_mapping_OPRA = result_dictionary["sip_mapping"]["OPRA"],
+                    sip_mapping_UTP = result_dictionary["sip_mapping"]["UTP"],
+                    type = result_dictionary["type"],                
+                    consolidated_updates_high_low = string(result_dictionary["update_rules"]["consolidated"]["updates_high_low"]),
+                    consolidated_updates_open_close = string(result_dictionary["update_rules"]["consolidated"]["updates_open_close"]),
+                    consolidated_updates_volume = string(result_dictionary["update_rules"]["consolidated"]["updates_volume"]),
+                    market_center_updates_high_low = string(result_dictionary["update_rules"]["market_center"]["updates_high_low"]),
+                    market_center_updates_open_close = string(result_dictionary["update_rules"]["market_center"]["updates_open_close"]),
+                    market_center_updates_volume = string(result_dictionary["update_rules"]["market_center"]["updates_volume"])
+                
+                )
+
+        push!(df, result_tuple)
+    end
+    return (header_dictionary, df)
+end
