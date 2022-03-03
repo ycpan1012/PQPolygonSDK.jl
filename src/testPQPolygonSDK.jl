@@ -31,5 +31,6 @@ export PolygonDividendsEndpointModel #ycpan
 export PolygonTickersEndpointModel #ycpan
 export PolygonConditionsEndpointModel #ycpan
 export PolygonStockFinancialsEndpointModel #ycpan
+export PolygonTickerTypesEndpointModel #ycpan
 
 end # module
