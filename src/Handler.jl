@@ -878,3 +878,97 @@ function _process_conditions_call_response(body::String) #ycpan
     end
     return (header_dictionary, df)
 end
+
+function _process_stock_financials_call_response(body::String) #ycpan
+    
+    # convert to JSON -
+    request_body_dictionary = JSON.parse(body)
+    # before we do anything - check: do we have an error? can be due to stick or date
+    status_flag = request_body_dictionary["status"]
+    if (status_flag == "ERROR")
+        return _polygon_error_handler(request_body_dictionary)
+    end
+
+    # initialize -
+    header_dictionary = Dict{String, Any}()
+    df = DataFrame(
+
+        financials = String[],
+        content = String[],
+        label = String[], 
+        order = Int[],
+        unit = String[],
+        value = Float64[],
+        formula = String[],
+        xpath = String[]
+        )
+
+    # fill in the header dictionary -
+    header_keys = [
+                "status", "request_id", "count", "next_url"
+        ];
+
+    #addressing missing value in header dictionary -
+    get!(request_body_dictionary,"next_url","N/A")
+    get!(request_body_dictionary,"count",0)
+
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # if no results we return nothing
+    if (request_body_dictionary["results"] == Any[]) # we have no results ...
+        # return the header and nothing -
+        return (header_dictionary, nothing)
+    end
+
+
+    #pull out financials dictionary
+    results_array = request_body_dictionary["results"]
+    financials_dictionary = Dict{String, Any}()
+    
+    for result_dictionary ∈ results_array
+
+        #addressing missing values
+        get!(result_dictionary, "start_date", "N/A")
+        get!(result_dictionary, "end_date", "N/A")
+
+        #update header dictionary
+        header_dictionary["company_name"] = result_dictionary["company_name"]
+        header_dictionary["cik"] = result_dictionary["cik"]
+        header_dictionary["fiscal_period"] = result_dictionary["fiscal_period"]
+        header_dictionary["fiscal_year"] = result_dictionary["fiscal_year"]
+        header_dictionary["source_filing_file_url"] = result_dictionary["source_filing_file_url"]
+        header_dictionary["source_filing_url"] = result_dictionary["source_filing_url"]
+        header_dictionary["start_date"] = result_dictionary["start_date"]
+        header_dictionary["end_date"] = result_dictionary["end_date"]
+
+        #pull out financials dictionary
+        financials_dictionary =  result_dictionary["financials"]   
+
+    end
+
+    #filling dataframe with desired information
+    for i in keys(financials_dictionary)
+        for j in keys(financials_dictionary[i])
+
+            #addressing missing values
+            get!(financials_dictionary[i][j], "formula", "N/A")
+            get!(financials_dictionary[i][j], "xpath", "N/A")
+            result_tuple = (
+
+                financials = i,
+                content = j,
+                label = financials_dictionary[i][j]["label"],
+                order = financials_dictionary[i][j]["order"],
+                unit = financials_dictionary[i][j]["unit"],
+                value = financials_dictionary[i][j]["value"],
+                formula = financials_dictionary[i][j]["formula"],
+                xpath = financials_dictionary[i][j]["xpath"]
+            )
+            push!(df, result_tuple)
+        end
+    end
+    
+    return (header_dictionary, df)
+end
