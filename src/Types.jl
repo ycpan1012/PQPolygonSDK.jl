@@ -225,3 +225,14 @@ mutable struct PolygonStockFinancialsEndpointModel <: AbstractPolygonEndpointMod
     # constructor -
     PolygonStockFinancialsEndpointModel() = new()
 end
+
+mutable struct PolygonTickerTypesEndpointModel <: AbstractPolygonEndpointModel #ycpan
+
+    # data -
+    apikey::String
+    asset_class::String
+    locale::String
+
+    # constructor -
+    PolygonTickerTypesEndpointModel() = new()
+end
