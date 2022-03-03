@@ -463,4 +463,50 @@ function url(base::String, model::PolygonConditionsEndpointModel; #ycpan
     # return -
     return _add_parameters_to_url_query_string(base_url, options_dictionary)
 end
+
+function url(base::String, model::PolygonStockFinancialsEndpointModel; #ycpan
+    apiversion::String = "X")::String
+    
+    # get data from the API call data -
+    apikey                = model.apikey
+    ticker                = model.ticker
+    cik                   = model.cik
+    company_name          = model.company_name
+    sic                   = model.sic
+    filing_date           = model.filing_date
+    period_of_report_date = model.period_of_report_date
+    timeframe             = model.timeframe
+    include_sources       = model.include_sources
+    order                 = model.order
+    limit                 = model.limit
+    sort                  = model.sort
+    
+    # build up the base string -
+    base_url = "$(base)/v$(apiversion)/reference/financials?"
+
+    # what keys are passed as parameters?
+    options_dictionary = Dict{String,Any}()
+    options_dictionary["apiKey"] = apikey
+    options_dictionary["ticker"] = ticker
+    options_dictionary["cik"] = cik
+    options_dictionary["company_name"] = company_name
+    options_dictionary["sic"] = sic    
+    options_dictionary["filing_date"] = filing_date
+    options_dictionary["period_of_report_date"] = period_of_report_date
+    options_dictionary["timeframe"] = timeframe
+    options_dictionary["include_sources"] = include_sources
+    options_dictionary["order"] = order
+    options_dictionary["limit"] = limit
+    options_dictionary["sort"] = sort
+
+    #not all parameters are required, if we have N/A input, we remove it"
+    for options ∈ keys(options_dictionary)
+        if options_dictionary[options] == "N/A"
+            pop!(options_dictionary, options)
+        end
+    end
+    
+    # return -
+    return _add_parameters_to_url_query_string(base_url, options_dictionary)
+end
 # -- URL FACTORY METHODS ABOVE HERE --------------------------------------------------- #
