@@ -205,3 +205,23 @@ mutable struct PolygonConditionsEndpointModel <: AbstractPolygonEndpointModel #y
     # constructor -
     PolygonConditionsEndpointModel() = new()
 end
+
+mutable struct PolygonStockFinancialsEndpointModel <: AbstractPolygonEndpointModel #ycpan
+
+    # data -
+    apikey::String
+    ticker::String
+    cik::String
+    company_name::String
+    sic::String
+    filing_date::String
+    period_of_report_date::String
+    timeframe::String
+    include_sources::String
+    order::String
+    limit::String
+    sort::String
+    
+    # constructor -
+    PolygonStockFinancialsEndpointModel() = new()
+end
