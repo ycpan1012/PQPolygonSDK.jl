@@ -876,6 +876,8 @@ function _process_conditions_call_response(body::String) #ycpan
 
         push!(df, result_tuple)
     end
+
+    # return -
     return (header_dictionary, df)
 end
 
@@ -970,5 +972,62 @@ function _process_stock_financials_call_response(body::String) #ycpan
         end
     end
     
+    # return -
+    return (header_dictionary, df)
+end
+
+function _process_ticker_types_call_response(body::String) #ycpan
+    
+    # convert to JSON -
+    #request_body_dictionary = JSON.parse(body)
+    # before we do anything - check: do we have an error? can be due to stick or date
+    status_flag = request_body_dictionary["status"]
+    if (status_flag == "ERROR")
+        return _polygon_error_handler(request_body_dictionary)
+    end
+
+    # initialize -
+    header_dictionary = Dict{String,Any}()
+    df = DataFrame(
+
+        code = String[],
+        description = String[],
+        asset_class = String[],
+        locale = String[]
+        )
+
+    # fill in the header dictionary -
+    header_keys = [
+                "status", "request_id", "count"
+        ];
+
+    #fill in next_url if no value
+    get!(request_body_dictionary,"count",0)
+
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # if no results we return nothing
+    if (request_body_dictionary["results"] == Any[]) # we have no results ...
+        # return the header and nothing -
+        return (header_dictionary, nothing)
+    end
+
+    results_array = request_body_dictionary["results"]
+    for result_dictionary ∈ results_array
+
+        result_tuple = (
+
+                    code = result_dictionary["code"],
+                    description = result_dictionary["description"],
+                    asset_class = result_dictionary["asset_class"],
+                    locale = result_dictionary["locale"]
+                )
+
+        push!(df, result_tuple)
+    end
+
+    #return - 
     return (header_dictionary, df)
 end
