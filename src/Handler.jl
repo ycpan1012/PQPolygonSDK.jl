@@ -502,11 +502,6 @@ function _process_exchanges_call_response(body::String) #ycpan
     results_array = request_body_dictionary["results"]
     for result_dictionary ∈ results_array
         # set some defaults in case missing fields -
-        get!(result_dictionary, "id", 0)
-        get!(result_dictionary, "type", "N/A")
-        get!(result_dictionary, "asset_class", "N/A")
-        get!(result_dictionary, "locale", "N/A")
-        get!(result_dictionary, "name", "N/A")
         get!(result_dictionary, "acronym", "N/A")
         get!(result_dictionary, "mic", "N/A")
         get!(result_dictionary, "operating_mic", "N/A")
