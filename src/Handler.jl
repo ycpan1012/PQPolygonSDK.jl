@@ -979,7 +979,7 @@ end
 function _process_ticker_types_call_response(body::String) #ycpan
     
     # convert to JSON -
-    #request_body_dictionary = JSON.parse(body)
+    request_body_dictionary = JSON.parse(body)
     # before we do anything - check: do we have an error? can be due to stick or date
     status_flag = request_body_dictionary["status"]
     if (status_flag == "ERROR")
