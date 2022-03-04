@@ -341,7 +341,8 @@ function _process_ticker_details_call_response(body::String) #ycpan
             logo_url = String[],
             icon_url = String[],
             share_class_shares_outstanding = Float64[],
-            weighted_shares_outstanding = Float64[]
+            weighted_shares_outstanding = Float64[],
+            delisted_utc = String[]
         )
 
     results_array = request_body_dictionary["results"]
@@ -377,6 +378,8 @@ function _process_ticker_details_call_response(body::String) #ycpan
 
     get!(results_array, "share_class_shares_outstanding", NaN)
     get!(results_array, "share_class_shares_outstanding", NaN)
+    get!(results_array, "delisted_utc", "N/A")
+
 
     result_tuple = (
 
@@ -407,7 +410,8 @@ function _process_ticker_details_call_response(body::String) #ycpan
                 logo_url = results_array["branding"]["logo_url"],
                 icon_url = results_array["branding"]["icon_url"],        
                 share_class_shares_outstanding = results_array["share_class_shares_outstanding"],
-                weighted_shares_outstanding = results_array["weighted_shares_outstanding"]
+                weighted_shares_outstanding = results_array["weighted_shares_outstanding"],
+                delisted_utc = results_array["delisted_utc"]
             )
     push!(df, result_tuple)
 
