@@ -344,6 +344,21 @@ function _process_ticker_details_call_response(body::String) #ycpan
             weighted_shares_outstanding = Float64[],
             delisted_utc = String[]
         )
+    
+    # fill in the header dictionary -
+    header_keys = [
+                "status", "request_id"
+        ];
+
+    for key ∈ header_keys
+        header_dictionary[key] = request_body_dictionary[key]
+    end
+
+    # if no results we return nothing
+    if (request_body_dictionary["results"] == Any[]) # we have no results ...
+        # return the header and nothing -
+        return (header_dictionary, nothing)
+    end
 
     results_array = request_body_dictionary["results"]
 
