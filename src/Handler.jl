@@ -614,13 +614,14 @@ function _process_market_status_call_response(body::String) #ycpan
     #initialize -
     header_dictionary = Dict{String,Any}()
     df = DataFrame(
-
+        
+    serverTime = String[],
     market = String[],
     earlyHours = Bool[],
     afterHours = Bool[],
-    serverTime = String[],
     nyse  = String[],
     nasdaq  = String[],
+    otc = String[],
     fx  = String[],
     crypto  = String[]
     );
@@ -630,13 +631,14 @@ function _process_market_status_call_response(body::String) #ycpan
     
     # build a results tuple -
     result_tuple = (
-    
+        
+        serverTime = results_array["serverTime"],    
         market = results_array["market"],
         earlyHours = results_array["earlyHours"],
         afterHours = results_array["afterHours"],
-        serverTime = results_array["serverTime"],
         nyse = results_array["exchanges"]["nyse"],
         nasdaq = results_array["exchanges"]["nasdaq"],
+        otc = results_array["exchanges"]["otc"],        
         fx = results_array["currencies"]["fx"],
         crypto = results_array["currencies"]["crypto"]
         )
