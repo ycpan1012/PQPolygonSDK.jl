@@ -447,20 +447,27 @@ function _process_market_holidays_call_response(body::String) #ycpan
         exchange = String[],
         name = String[],
         date = Date[],
-        status = String[]
+        status = String[],
+        open = String[],
+        close = String[]
     );
-
+    
     # populate the results DataFrame -
     results_array = request_body_dictionary
     for result_dictionary ∈ results_array
-
+        
+        get!(result_dictionary, "open", "N/A")
+        get!(result_dictionary, "close", "N/A")
+        
         # build a results tuple -
         result_tuple = (
 
             exchange = result_dictionary["exchange"],
             name = result_dictionary["name"],
             date = Date(result_dictionary["date"]),
-            status = result_dictionary["status"]
+            status = result_dictionary["status"],
+            open = result_dictionary["open"],
+            close = result_dictionary["close"]
         )
     
         # push that tuple into the df -
